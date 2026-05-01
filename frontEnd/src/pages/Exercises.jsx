@@ -53,7 +53,7 @@ const Exercises = () => {
       console.log('Prompt:', prompt); // Agrega este mensaje de registro
 
       try {
-        const response = await Axios.post('http://localhost:3031/chat', {
+        const response = await Axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/chat`, {
           prompt,
         });
 
@@ -145,7 +145,7 @@ const Exercises = () => {
     try {
       // Envía los resultados al servidor
       const response = await Axios.post(
-        'http://localhost:3031/guardar-resultados',
+        `${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/guardar-resultados`,
         {
           // Agrega el ID del usuario aquí
           subject,

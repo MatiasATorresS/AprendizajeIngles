@@ -12,7 +12,7 @@ export default function Users_Admin({ username }) {
 
   useEffect(() => {
     // Realiza una solicitud al servidor para obtener la lista de usuarios
-    Axios.get('http://localhost:3031/users')
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/users`)
       .then((response) => {
         setUsers(response.data);
       })

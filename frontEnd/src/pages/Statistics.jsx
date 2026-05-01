@@ -19,7 +19,7 @@ export default function Users_Admin({ username }) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    Axios.get('http://localhost:3031/users')
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/users`)
       .then((response) => setUsers(response.data))
       .catch((error) => console.error('Error al obtener usuarios:', error));
   }, []);
@@ -27,7 +27,7 @@ export default function Users_Admin({ username }) {
   const handleViewStatistics = (user) => {
     setLoading(true);
     setSelectedUser(user);
-    Axios.get(`http://localhost:3031/admin/user_exercises/${user.id}`)
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/admin/user_exercises/${user.id}`)
       .then((response) => {
         setUserExercises(response.data);
         setShowModal(true);

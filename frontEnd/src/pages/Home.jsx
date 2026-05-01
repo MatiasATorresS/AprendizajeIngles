@@ -40,7 +40,7 @@ function Home() {
   const navigate = useNavigate();
   Axios.defaults.withCredentials = true;
   useEffect(() => {
-    Axios.get('http://localhost:3031/login').then((response) => {
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`).then((response) => {
       if (response.data.loggedIn == true) {
         
         navigate('/main');

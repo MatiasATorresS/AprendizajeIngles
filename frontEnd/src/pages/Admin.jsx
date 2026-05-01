@@ -12,7 +12,7 @@ export default function Admin({ username }) {
 
   const handleLogout = async () => {
     try {
-      await Axios.get('http://localhost:3031/logout');
+      await Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/logout`);
       window.location.replace('/login');
     } catch (error) {
       console.error('Error durante el cierre de sesión:', error);

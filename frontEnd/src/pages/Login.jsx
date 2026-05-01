@@ -22,7 +22,7 @@ function Login() {
     setPasswordError('');
 
     try {
-      const response = await Axios.post('http://localhost:3031/login', {
+      const response = await Axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`, {
         email,
         password,
       });
@@ -49,7 +49,7 @@ function Login() {
   };
 
   useEffect(() => {
-    Axios.get('http://localhost:3031/login').then((response) => {
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`).then((response) => {
       if (response.data.loggedIn == true) {
         setLoginStatus(response.data.user[0].username);
         navigate('/main');

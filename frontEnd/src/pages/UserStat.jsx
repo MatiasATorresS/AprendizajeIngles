@@ -12,7 +12,7 @@ export default function UserStat() {
     async function fetchUserExercises() {
       try {
         const response = await Axios.get(
-          'http://localhost:3031/user_exercises'
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/user_exercises`
         );
         setUserExercises(response.data);
         setLoading(false);

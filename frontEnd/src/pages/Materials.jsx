@@ -12,10 +12,10 @@ export default function Materials() {
     async function fetchData() {
       try {
         const unidadesResponse = await Axios.get(
-          'http://localhost:3031/unidades_ingles'
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/unidades_ingles`
         );
         const materiasResponse = await Axios.get(
-          'http://localhost:3031/materias_ingles'
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/materias_ingles`
         );
 
         const combinedData = unidadesResponse.data.unidades.map((unidad) => {

@@ -10,7 +10,7 @@ export default function HomeUser() {
   Axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    Axios.get('http://localhost:3031/login').then((response) => {
+    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`).then((response) => {
       if (response.data.loggedIn === true) {
         setRole(response.data.user[0].role);
         setUsername(response.data.user[0].username); // Almacenar el nombre de usuario o del administrador
