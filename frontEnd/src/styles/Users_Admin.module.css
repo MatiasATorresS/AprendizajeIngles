@@ -1,0 +1,178 @@
+/* Users_Admin.module.css — Diseño moderno y consistente con el proyecto */
+
+/* ─── Navbar ─── */
+.navbar {
+  background-color: #1a1d23;
+  padding: 10px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.titleText {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 10px;
+  letter-spacing: 0.3px;
+}
+
+.navLinks {
+  gap: 4px;
+}
+
+.navLinks a {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-decoration: none !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.navLinks a:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Contenido principal ─── */
+.pageWrapper {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pageTitle {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: -1px;
+}
+
+.pageSubtitle {
+  font-size: 1.05rem;
+  color: #6c757d;
+  margin-bottom: 32px;
+}
+
+/* ─── Tarjeta contenedora de la tabla ─── */
+.tableCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: none;
+  border-top: 5px solid #007bff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* ─── Tabla ─── */
+.table {
+  margin: 0 !important;
+  border: none !important;
+}
+
+.table thead tr {
+  background-color: #f8f9fa;
+}
+
+.table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6c757d;
+  border: none !important;
+  padding: 16px 20px;
+  border-bottom: 2px solid #e9ecef !important;
+}
+
+.table tbody td {
+  padding: 14px 20px;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #495057;
+  border: none !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9ff;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* ─── Celda de usuario con avatar ─── */
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: rgba(0, 123, 255, 0.12);
+  color: #007bff;
+}
+
+.username {
+  font-weight: 600;
+  color: #343a40;
+}
+
+/* ─── Badge de Rol ─── */
+.roleAdmin {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.roleUser {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+/* ─── ID badge ─── */
+.idBadge {
+  display: inline-block;
+  background: #f0f4ff;
+  color: #6c84c4;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ─── Email ─── */
+.emailText {
+  color: #6c757d;
+  font-size: 13px;
+}

@@ -1,0 +1,185 @@
+/* Admin.module.css — Diseño moderno consistente con el proyecto */
+
+/* ─── Navbar (sin tocar la lógica, solo estilos) ─── */
+.navbar {
+  background-color: #1a1d23;
+  padding: 10px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbarBrand {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 10px;
+  letter-spacing: 0.3px;
+}
+
+.navLinks {
+  margin-right: 20px;
+}
+
+.navLink {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 20px;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.navLink:hover {
+  color: #ffffff;
+}
+
+.adminText {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  margin-right: 16px;
+}
+
+.logoutContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logoutLink {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 4px 16px !important;
+  transition: all 0.25s ease !important;
+}
+
+.logoutLink:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ─── Contenido principal ─── */
+.pageWrapper {
+  padding: 50px 20px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.welcomeText {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: -1px;
+}
+
+.welcomeSubtitle {
+  font-size: 1.05rem;
+  color: #6c757d;
+  margin-bottom: 48px;
+}
+
+/* ─── Tarjetas ─── */
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.navCard {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  border-top: 5px solid #007bff;
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.navCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
+}
+
+.navCardStats {
+  border-top-color: #17a2b8;
+}
+
+.navCardStats:hover {
+  box-shadow: 0 20px 40px rgba(23, 162, 184, 0.15);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin-bottom: 18px;
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.cardIconStats {
+  background: rgba(23, 162, 184, 0.1);
+  color: #17a2b8;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 10px;
+}
+
+.cardDescription {
+  color: #6c757d;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+  flex-grow: 1;
+}
+
+.cardLink {
+  display: inline-block;
+  padding: 9px 24px;
+  border-radius: 30px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.4px;
+  transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.cardLink:hover {
+  background-color: #0056b3;
+  color: #ffffff;
+  transform: scale(1.04);
+}
+
+.cardLinkStats {
+  background-color: #17a2b8;
+}
+
+.cardLinkStats:hover {
+  background-color: #138496;
+}

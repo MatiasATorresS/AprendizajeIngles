@@ -1,0 +1,234 @@
+/* Exercises.module.css — Diseño moderno consistente con el resto del proyecto */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0ef;
+  color: #495057;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.customNavbar {
+  background-color: #F8F9FA;
+  color: #000000;
+  padding: 10px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.navbarBrand {
+  font-size: 20px;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.navLink {
+  margin-left: 20px;
+}
+
+.navLink a {
+  color: #007bff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.3s ease-in-out;
+}
+
+.navLink a:hover {
+  color: #0056b3;
+}
+
+/* ─── Contenedor principal ─── */
+.pageWrapper {
+  padding: 40px 20px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* Título con gradiente igual que User/Materials */
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #6c757d;
+  margin-bottom: 36px;
+}
+
+/* ─── Tarjeta del formulario ─── */
+.formCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: none;
+  border-top: 5px solid #007bff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 32px 36px;
+  margin-bottom: 32px;
+}
+
+.formLabel {
+  font-weight: 600;
+  font-size: 14px;
+  color: #343a40;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+.formControl {
+  border-radius: 10px !important;
+  border: 1px solid #dee2e6 !important;
+  padding: 10px 14px !important;
+  font-size: 15px !important;
+  margin-bottom: 20px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formControl:focus {
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12) !important;
+}
+
+/* Botones en píldora — mismo estilo que User.jsx */
+.generateButton,
+.checkAnswersButton,
+.restartButton {
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  padding: 10px 28px !important;
+  letter-spacing: 0.4px;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.generateButton:disabled,
+.checkAnswersButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ─── Sección de preguntas generadas ─── */
+.generatedQuestions {
+  margin-top: 0;
+}
+
+.questionsHeader {
+  font-size: 20px;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.questionsHeader span {
+  color: #007bff;
+}
+
+/* Tarjeta individual de pregunta */
+.question {
+  background: #ffffff;
+  border-radius: 14px;
+  border: none;
+  border-left: 5px solid #007bff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.question:hover {
+  box-shadow: 0 10px 28px rgba(0, 123, 255, 0.1);
+}
+
+.questionText {
+  font-size: 16px;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 16px;
+}
+
+/* Alternativas como filas clicables */
+.alternativeLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  background: #f8f9fa;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.alternativeLabel:hover {
+  background-color: #e8f0fe;
+  border-color: #007bff;
+}
+
+.alternativeLabel input[type="radio"] {
+  accent-color: #007bff;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ─── Resultados ─── */
+.resultsContainer {
+  margin-top: 32px;
+}
+
+.resultsHeader {
+  font-size: 20px;
+  font-weight: 700;
+  color: #343a40;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.result {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #dee2e6;
+}
+
+.result p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.correctAnswer {
+  color: #198754;
+  font-weight: 700;
+}
+
+.incorrectAnswer {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+/* Puntuación total */
+.scoreDisplay {
+  font-size: 22px;
+  font-weight: 800;
+  color: #007bff;
+  margin: 24px 0 20px;
+}

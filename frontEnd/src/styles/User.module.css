@@ -1,0 +1,158 @@
+/* User.module.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0; /* Color de fondo principal */
+  color: #495057;
+  height: 100vh;
+}
+
+
+.userContainer {
+  
+  padding-bottom: 30px;
+}
+
+.navbar {
+  background-color: #ffffff; /* Color de fondo de la barra de navegación */
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+
+  padding: 10px;
+}
+
+.userNav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.welcomeText {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.logoutLink {
+  margin-left: auto;
+}
+
+.contentContainer {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.heading {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  letter-spacing: -1px;
+}
+
+.paragraph {
+  font-size: 1.15rem;
+  color: #6c757d;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
+.card {
+  width: 320px;
+  border-radius: 16px;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+  overflow: hidden;
+  border-top: 5px solid transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.cardMaterials { border-top-color: #007bff; }
+.cardMaterials:hover { box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15); }
+
+.cardExercises { border-top-color: #28a745; }
+.cardExercises:hover { box-shadow: 0 20px 40px rgba(40, 167, 69, 0.15); }
+
+.cardStats { border-top-color: #17a2b8; }
+.cardStats:hover { box-shadow: 0 20px 40px rgba(23, 162, 184, 0.15); }
+
+.cardBody {
+  padding: 35px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.iconMaterials { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+.iconExercises { background: rgba(40, 167, 69, 0.1); color: #28a745; }
+.iconStats { background: rgba(23, 162, 184, 0.1); color: #17a2b8; }
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #343a40;
+}
+
+.cardText {
+  font-size: 15px;
+  color: #6c757d;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.link {
+  text-decoration: none;
+  width: 100%;
+}
+
+.cardButton {
+  width: 100%;
+  border-radius: 30px !important;
+  font-weight: 600 !important;
+  padding: 10px 0 !important;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px !important;
+  transition: all 0.3s ease;
+}
