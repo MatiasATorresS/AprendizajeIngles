@@ -303,32 +303,23 @@ app.post('/chat', async (req, res) => {
 });
 */
 
-// Version funcional con OpenRouter
+const OpenAI = require('openai');
+
+// Version mejorada de la IA (Usando el SDK oficial de OpenAI apuntando a OpenRouter para mayor estabilidad en la nube)
 app.post('/chat', async (req, res) => {
   const { prompt } = req.body;
   try {
-    // Ya que server.js usa 'require', utilizamos 'import()' dinámico para cargar el SDK
-    const { OpenRouter } = await import("@openrouter/sdk");
-
-    const openrouter = new OpenRouter({
-      // ¡Asegúrate de NO poner los símbolos < y > en tu clave!
-      apiKey: process.env.OPENROUTER_API_KEY
+    const openai = new OpenAI({
+      baseURL: "https://openrouter.ai/api/v1",
+      apiKey: process.env.OPENROUTER_API_KEY.replace(/"/g, ''), // Quitamos comillas por si se copiaron por error en Render
     });
 
-    const stream = await openrouter.chat.send({
-      chatRequest: {
-        model: "openai/gpt-3.5-turbo", // Ajuste al modelo original que usabas, también válido en OpenRouter
-        messages: [
-          {
-            "role": "user",
-            "content": prompt
-          }
-        ],
-        stream: true
-      }
+    const stream = await openai.chat.completions.create({
+      model: "openai/gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+      stream: true,
     });
 
-    // Configuramos los headers para enviar las partes a la vez
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
 
     for await (const chunk of stream) {
@@ -338,10 +329,10 @@ app.post('/chat', async (req, res) => {
       }
     }
     
-    res.end(); // Finalizamos la respuesta al cliente
+    res.end();
   } catch (err) {
-    console.error(err);
-    res.status(500).send(err);
+    console.error('AI Error:', err);
+    res.status(500).send({ error: err.message, stack: err.stack });
   }
 });
 
