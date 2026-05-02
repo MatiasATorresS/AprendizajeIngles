@@ -10,11 +10,22 @@ export default function HomeUser() {
   Axios.defaults.withCredentials = true;
 
   useEffect(() => {
+    // Intentar cargar primero desde la memoria local (para rapidez y móviles)
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setRole(user.role);
+      setUsername(user.username);
+      setId(user.id);
+    }
+
+    // Verificar con el servidor en segundo plano
     Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`).then((response) => {
       if (response.data.loggedIn === true) {
         setRole(response.data.user[0].role);
-        setUsername(response.data.user[0].username); // Almacenar el nombre de usuario o del administrador
+        setUsername(response.data.user[0].username);
         setId(response.data.user[0].id);
+        localStorage.setItem('user', JSON.stringify(response.data.user[0]));
       }
     });
   }, []);

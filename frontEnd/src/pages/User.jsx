@@ -12,7 +12,8 @@ export default function User({ username }) {
   const handleLogout = async () => {
     try {
       await Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/logout`);
-      // Redirige al usuario a la página de inicio de sesión
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('user');
     } catch (error) {
       console.error('Error durante el cierre de sesión:', error);
     }

@@ -30,7 +30,10 @@ function Login() {
       if (response.data.message) {
         setLoginStatus(response.data.message);
       } else {
-        localStorage.setItem('loggedIn', 'true'); // Establecemos el indicador de inicio de sesión
+        // Guardamos los datos del usuario en el teléfono/navegador para que funcione en móviles
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(response.data[0]));
+        
         setLoginStatus(response.data[0].username);
         navigate('/main');
       }
