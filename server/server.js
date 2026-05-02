@@ -22,13 +22,18 @@ app.use(
 );
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set('trust proxy', 1); // Necesario para que las cookies seguras funcionen detrás de Render
 app.use(
   session({
     key: 'userId',
     secret: 'userSecret',
     resave: false,
-    saveUninitialized: true, // Guardar incluso si no se ha modificado
-    cookie: { httpOnly: true }, // Cookie no caduca al cerrar el navegador
+    saveUninitialized: true,
+    cookie: { 
+      httpOnly: true, 
+      secure: true, // Debe ser true en producción (HTTPS)
+      sameSite: 'none' // Obligatorio para enviar cookies entre Vercel y Render
+    },
   })
 );
 
