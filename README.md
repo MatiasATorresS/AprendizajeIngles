@@ -2,6 +2,8 @@
 
 ¡Bienvenido al **Sistema de Aprendizaje de Inglés**! Esta es una aplicación web full-stack diseñada para ayudar a estudiantes (especialmente de educación secundaria en Chile) a mejorar sus habilidades en el idioma inglés a través de lecciones interactivas y un asistente de práctica impulsado por Inteligencia Artificial.
 
+https://aprendizaje-ingles.vercel.app/
+
 ## 🚀 Características Principales
 
 - **Autenticación Segura:** Registro e inicio de sesión con contraseñas encriptadas.
