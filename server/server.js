@@ -37,24 +37,72 @@ app.use(
   })
 );
 
-const db = mysql.createConnection({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
-  ssl: {
-    rejectUnauthorized: true
-  }
-});
+function createPool() {
+  return mysql.createPool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306,
+    ssl: {
+      rejectUnauthorized: true
+    },
+    connectionLimit: 10,
+    queueLimit: 0,
+    waitForConnections: true,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
+  });
+}
 
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-  } else {
-    console.log('Connected to database');
+let pool = createPool();
+
+const RECONNECTABLE_ERRORS = [
+  'PROTOCOL_CONNECTION_LOST',
+  'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR',
+  'PROTOCOL_ENQUEUE_AFTER_QUIT',
+  'ECONNRESET',
+  'ETIMEDOUT',
+  'ER_CON_COUNT_ERROR',
+  'POOL_CLOSED',
+  'EPIPE'
+];
+
+// Helper que ejecuta consultas sobre el pool con Callback API (mismo uso que antes:
+// db.query(sql, params, cb)) y se recupera automáticamente cuando se pierde la
+// conexión (TiDB Serverless / Render apagados por inactividad).
+function runQuery(query, params, callback, retried) {
+  pool.query(query, params, (err, result) => {
+    if (err) {
+      const isConnectionError = RECONNECTABLE_ERRORS.some(
+        (code) => err.code === code || String(err.message).includes(code)
+      );
+
+      if (isConnectionError && !retried) {
+        console.error('Database connection lost, reconnecting...', err.code);
+        pool.end(() => {
+          pool = createPool();
+          runQuery(query, params, callback, true);
+        });
+        return;
+      }
+
+      callback(err, null);
+      return;
+    }
+    callback(null, result);
+  });
+}
+
+const db = {
+  query(query, params, callback) {
+    if (typeof params === 'function') {
+      callback = params;
+      params = [];
+    }
+    runQuery(query, params, callback, false);
   }
-});
+};
 
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
