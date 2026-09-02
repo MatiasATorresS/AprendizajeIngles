@@ -14,7 +14,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   padding: 40px;
-  width: 420px;
+  width: 440px;
   max-width: 100%;
 }
 
@@ -23,8 +23,15 @@
   font-size: 1.9rem;
   font-weight: 800;
   text-align: center;
-  margin: 0 0 24px;
+  margin: 0 0 8px;
   color: var(--color-pine-dark);
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin: 0 0 24px;
 }
 
 .label {
@@ -35,24 +42,53 @@
   display: block;
 }
 
-.input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
 .button {
   width: 100%;
   margin-top: 18px;
   padding: 12px;
-  border-radius: var(--radius-sm);
-  background: var(--color-pine);
   border: none;
+  border-radius: var(--radius-sm);
   font-weight: 700;
+  background: var(--color-pine);
+  color: #fff;
 }
 
-.button:hover {
+.button:hover:not(:disabled),
+.button:focus-visible {
   background: var(--color-pine-dark);
+  color: #fff;
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.passwordToggle {
+  color: var(--color-muted);
+  border: 1px solid var(--color-line-strong);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.passwordToggle:hover {
+  color: var(--color-pine);
+  border-color: var(--color-pine);
+  background: var(--color-surface);
+}
+
+.secondaryButton {
+  background: transparent;
+  color: var(--color-vermillion-dark);
+  border: 2px solid var(--color-vermillion);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+}
+
+.secondaryButton:hover {
+  background: var(--color-vermillion);
+  color: #fff;
 }
 
 .text {
@@ -65,9 +101,13 @@
   justify-items: center;
 }
 
-.error-message {
+.formError {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-soft);
   color: var(--color-danger);
-  font-size: 14px;
-  margin-top: 5px;
+  font-size: 0.9rem;
   text-align: center;
 }
