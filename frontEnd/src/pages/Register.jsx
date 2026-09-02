@@ -4,143 +4,197 @@ import api from '../services/api';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
-import FieldsIncompleteMessage from '../components/FieldsIncompleteMessage';
-import InvalidEmailMessage from '../components/InvalidEmailMessage';
 import PasswordValidator from '../components/PasswordValidator';
-import PasswordMismatch from '../components/PasswordMismatch';
+import { isPasswordValid } from '../utils/password';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Register.module.css';
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function Register() {
-  const [firstNameReg, setFirstNameReg] = useState('');
-  const [lastNameReg, setLastNameReg] = useState('');
-  const [emailReg, setEmailReg] = useState('');
-  const [passwordReg, setPasswordReg] = useState('');
-  const [fieldsIncomplete, setFieldsIncomplete] = useState(false);
-  const [confirmPasswordReg, setConfirmPasswordReg] = useState('');
-  const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [touched, setTouched] = useState({});
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [attempted, setAttempted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const navigate = useNavigate();
   useDocumentMeta('Crear cuenta · Aprendizaje de Inglés');
 
-  const validateForm = () => {
-    if (!firstNameReg || !lastNameReg || !emailReg || !passwordReg) {
-      setFieldsIncomplete(true);
-      return false;
-    }
+  const emailValid = EMAIL_REGEX.test(email.trim());
+  const passwordValid = isPasswordValid(password);
+  const confirmMatches = confirmPassword === password;
 
-    if (passwordReg !== confirmPasswordReg) {
-      setPasswordMismatch(true);
-      return false;
-    }
-
-    if (!emailReg.includes('@') || !emailReg.includes('.')) {
-      return false;
-    }
-
-    return true;
+  const fieldErrors = {
+    firstName: !firstName.trim() ? 'Ingresa tu nombre.' : '',
+    lastName: !lastName.trim() ? 'Ingresa tu apellido.' : '',
+    email: !email.trim()
+      ? 'Ingresa tu correo electrónico.'
+      : emailValid
+        ? ''
+        : 'Ingresa un correo electrónico válido.',
+    password: password
+      ? passwordValid
+        ? ''
+        : 'La contraseña debe cumplir con los requisitos.'
+      : 'Ingresa una contraseña.',
+    confirmPassword: confirmPassword
+      ? confirmMatches
+        ? ''
+        : 'Las contraseñas no coinciden.'
+      : 'Confirma tu contraseña.',
   };
 
-  const register = async (e) => {
+  const shouldShow = (field) => attempted || touched[field];
+
+  const markTouched = (field) => setTouched((prev) => ({ ...prev, [field]: true }));
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setAttempted(true);
     setSubmitError('');
 
-    if (validateForm()) {
-      setFieldsIncomplete(false);
-      setPasswordMismatch(false);
+    if (Object.values(fieldErrors).some(Boolean)) return;
 
-      try {
-        await api.post('/register', {
-          username: `${firstNameReg} ${lastNameReg}`,
-          email: emailReg,
-          password: passwordReg,
-        });
-        navigate('/login');
-      } catch (error) {
-        console.error(error);
-        setSubmitError(
-          'No se pudo crear la cuenta. Por favor, inténtalo de nuevo.'
-        );
-      }
+    setSubmitting(true);
+    try {
+      await api.post('/register', {
+        username: `${firstName.trim()} ${lastName.trim()}`,
+        email: email.trim(),
+        password,
+      });
+      navigate('/login');
+    } catch (error) {
+      console.error('Error registering:', error);
+      setSubmitError('No se pudo crear la cuenta. Inténtalo de nuevo más tarde.');
+      setSubmitting(false);
     }
   };
 
   return (
     <main id="main">
       <Container className={`d-flex align-items-center justify-content-center ${styles.container}`}>
-        <Form className={`text-justify ${styles.form}`} onSubmit={register} noValidate>
-          <h2 className={`mb-4 ${styles.title}`}>Registro</h2>
-          <Form.Group controlId="formGridFirstName">
-            <Form.Label className={styles.label}>Primer Nombre</Form.Label>
+        <Form noValidate onSubmit={handleSubmit} className={styles.form}>
+          <h2 className={styles.title}>Crear tu cuenta</h2>
+          <p className={styles.subtitle}>Empieza a practicar inglés en minutos.</p>
+
+          <Form.Group controlId="registerFirstName">
+            <Form.Label className={styles.label}>Nombre</Form.Label>
             <Form.Control
               required
               type="text"
               name="firstName"
-              placeholder="Tu primer nombre"
+              placeholder="Tu nombre"
               autoComplete="given-name"
-              onChange={(e) => setFirstNameReg(e.target.value)}
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              onBlur={() => markTouched('firstName')}
+              isInvalid={shouldShow('firstName') && !!fieldErrors.firstName}
             />
+            <Form.Control.Feedback type="invalid">{fieldErrors.firstName}</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="formGridLastName">
-            <Form.Label className={styles.label}>Primer Apellido</Form.Label>
+
+          <Form.Group controlId="registerLastName">
+            <Form.Label className={styles.label}>Apellido</Form.Label>
             <Form.Control
               required
               type="text"
               name="lastName"
-              placeholder="Tu primer apellido"
+              placeholder="Tu apellido"
               autoComplete="family-name"
-              onChange={(e) => setLastNameReg(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              onBlur={() => markTouched('lastName')}
+              isInvalid={shouldShow('lastName') && !!fieldErrors.lastName}
             />
+            <Form.Control.Feedback type="invalid">{fieldErrors.lastName}</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label className={styles.label}>Dirección Email</Form.Label>
+
+          <Form.Group controlId="registerEmail">
+            <Form.Label className={styles.label}>Correo electrónico</Form.Label>
             <Form.Control
               required
               type="email"
               name="email"
-              placeholder="Ingresar email"
+              placeholder="tucorreo@ejemplo.com"
               autoComplete="email"
-              onChange={(e) => setEmailReg(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={() => markTouched('email')}
+              isValid={touched.email && emailValid}
+              isInvalid={shouldShow('email') && !!fieldErrors.email}
             />
+            <Form.Control.Feedback type="invalid">{fieldErrors.email}</Form.Control.Feedback>
+            <Form.Control.Feedback type="valid">Correo válido.</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
+
+          <Form.Group controlId="registerPassword">
             <Form.Label className={styles.label}>Contraseña</Form.Label>
             <Form.Control
               required
               type="password"
               name="password"
-              placeholder="Ingresar contraseña"
+              placeholder="Crea una contraseña"
               autoComplete="new-password"
-              onChange={(e) => setPasswordReg(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onFocus={() => setPasswordFocused(true)}
+              onBlur={() => {
+                markTouched('password');
+                setPasswordFocused(false);
+              }}
+              isValid={touched.password && passwordValid}
+              isInvalid={shouldShow('password') && !!fieldErrors.password}
+            />
+            <Form.Control.Feedback type="invalid">{fieldErrors.password}</Form.Control.Feedback>
+            <Form.Control.Feedback type="valid">La contraseña cumple con los requisitos.</Form.Control.Feedback>
+            <PasswordValidator
+              password={password}
+              show={passwordFocused || password.length > 0 || shouldShow('password')}
             />
           </Form.Group>
-          <Form.Group controlId="formBasicConfirmPassword">
-            <Form.Label className={styles.label}>Confirmar Contraseña</Form.Label>
+
+          <Form.Group controlId="registerConfirmPassword">
+            <Form.Label className={styles.label}>Confirmar contraseña</Form.Label>
             <Form.Control
               required
               type="password"
               name="confirmPassword"
-              placeholder="Confirmar contraseña"
+              placeholder="Repite la contraseña"
               autoComplete="new-password"
-              onChange={(e) => setConfirmPasswordReg(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={() => markTouched('confirmPassword')}
+              isValid={confirmPassword.length > 0 && confirmMatches}
+              isInvalid={shouldShow('confirmPassword') && !!fieldErrors.confirmPassword}
             />
+            <Form.Control.Feedback type="invalid">{fieldErrors.confirmPassword}</Form.Control.Feedback>
           </Form.Group>
-          <PasswordValidator password={passwordReg} />
-          <PasswordMismatch show={passwordMismatch} />
-          <InvalidEmailMessage email={emailReg} />
-          <FieldsIncompleteMessage show={fieldsIncomplete} />
+
           {submitError && (
-            <p className="text-danger mt-2" role="alert">
+            <div className={styles.submitError} role="alert">
               {submitError}
-            </p>
+            </div>
           )}
-          <Button variant="primary" type="submit" className={`mb-3 ${styles['register-button']}`}>
-            Crear cuenta
+
+          <Button
+            variant="primary"
+            type="submit"
+            className={styles['register-button']}
+            disabled={submitting}
+            aria-busy={submitting}
+          >
+            {submitting ? 'Creando cuenta…' : 'Crear cuenta'}
           </Button>
-          <div className={`text ${styles.text}`}>
+
+          <div className={styles.text}>
             <span>¿Ya tienes una cuenta?</span>
             <Link to="/login">
-              <Button variant="secondary" type="button" className={`ml-2 ${styles['log-account-button']}`}>
+              <Button variant="secondary" type="button" className={styles['log-account-button']}>
                 Ingresar
               </Button>
             </Link>

@@ -1,38 +1,30 @@
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Alert from 'react-bootstrap/Alert';
+import { useId } from 'react';
+import { passwordRequirements } from '../utils/password';
 import './PasswordValidator.css';
 
-function PasswordValidator({ password }) {
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()\-_+=<>{}/[\]:;,.,\\^~#])[\w@$!%*?&()\-_+=<>{}/[\]:;,.,\\^~#]{8,}$/;
+function PasswordValidator({ password, show }) {
+  const headingId = useId();
 
-  const isValid = passwordRegex.test(password);
+  if (!show) return null;
 
   return (
-    <div className="password-validator">
-      <OverlayTrigger
-        placement="right"
-        trigger={['hover', 'focus']}
-        overlay={
-          <Tooltip id="password-tooltip">
-            La contraseña debe tener al menos 8 caracteres, 1 mayúscula, 1
-            número y 1 carácter especial.
-          </Tooltip>
-        }>
-        <button type="button" className="info-icon" aria-label="Ver requisitos de la contraseña">
-          ?
-        </button>
-      </OverlayTrigger>
-      {isValid ? (
-        <Alert variant="success" role="status">
-          La contraseña cumple con los requisitos.
-        </Alert>
-      ) : (
-        <Alert variant="danger" role="alert">
-          La contraseña no cumple con los requisitos.
-        </Alert>
-      )}
+    <div className="password-validator" role="group" aria-labelledby={headingId}>
+      <p id={headingId} className="password-validator__title">
+        La contraseña debe contener:
+      </p>
+      <ul className="password-validator__list">
+        {passwordRequirements.map(({ label, test }) => {
+          const met = test(password);
+          return (
+            <li key={label} className={met ? 'is-met' : ''}>
+              <span className="password-validator__mark" aria-hidden="true">
+                {met ? '✓' : '•'}
+              </span>
+              {label}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
