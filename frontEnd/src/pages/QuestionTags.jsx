@@ -1,71 +1,46 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, PracticeTip } from '../components/SubjectLayout';
 
 export default function QuestionTags() {
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Estructura Gramatical"
+      title="Question Tags"
+      intro={
+        <p>
+          Las <strong>Question Tags</strong> (etiquetas interrogativas) son estructuras cortas al final de una afirmación que se usan para confirmar información o buscar la aprobación del oyente.
+        </p>
+      }>
+      <SubjectSection title="Reglas de Formación">
+        <p>Para formar una Question Tag, sigue estas reglas:</p>
+        <SubjectList items={[
+          'Si la afirmación es <strong>positiva</strong>, la Question Tag será <strong>negativa</strong>.',
+          'Si la afirmación es <strong>negativa</strong>, la Question Tag será <strong>positiva</strong>.',
+          'Utiliza el mismo verbo auxiliar de la afirmación principal.',
+          'Agrega el pronombre correcto en la Question Tag.',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Estructura Gramatical</span>
-          <h1 className={styles.subjectTitle}>Question Tags</h1>
-          <p className={styles.subjectIntro}>
-            Las <strong>Question Tags</strong> (etiquetas interrogativas) son estructuras cortas al final de una afirmación que se usan para confirmar información o buscar la aprobación del oyente.
-          </p>
-        </div>
+      <SubjectSection title="Ejemplos con Afirmación Positiva">
+        <p>La afirmación es positiva → la tag es negativa:</p>
+        <SubjectList items={[
+          "You are a student, <strong>aren't you</strong>? (Eres estudiante, ¿verdad?)",
+          "She works here, <strong>doesn't she</strong>? (Ella trabaja aquí, ¿verdad?)",
+          "We have met before, <strong>haven't we</strong>? (Nos hemos visto antes, ¿verdad?)",
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Reglas de Formación</h2>
-          <p className={styles.sectionText}>Para formar una Question Tag, sigue estas reglas:</p>
-          <ul className={styles.sectionList}>
-            <li>Si la afirmación es <strong>positiva</strong>, la Question Tag será <strong>negativa</strong>.</li>
-            <li>Si la afirmación es <strong>negativa</strong>, la Question Tag será <strong>positiva</strong>.</li>
-            <li>Utiliza el mismo verbo auxiliar de la afirmación principal.</li>
-            <li>Agrega el pronombre correcto en la Question Tag.</li>
-          </ul>
-        </div>
+      <SubjectSection title="Ejemplos con Afirmación Negativa">
+        <p>La afirmación es negativa → la tag es positiva:</p>
+        <SubjectList items={[
+          "He doesn't like coffee, <strong>does he</strong>? (Él no le gusta el café, ¿o sí?)",
+          "You aren't ready, <strong>are you</strong>? (No estás listo, ¿o sí?)",
+          "They haven't called, <strong>have they</strong>? (No han llamado, ¿verdad?)",
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Ejemplos con Afirmación Positiva</h2>
-          <p className={styles.sectionText}>La afirmación es positiva → la tag es negativa:</p>
-          <ul className={styles.sectionList}>
-            <li>You are a student, <strong>aren't you</strong>? (Eres estudiante, ¿verdad?)</li>
-            <li>She works here, <strong>doesn't she</strong>? (Ella trabaja aquí, ¿verdad?)</li>
-            <li>We have met before, <strong>haven't we</strong>? (Nos hemos visto antes, ¿verdad?)</li>
-          </ul>
-        </div>
-
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Ejemplos con Afirmación Negativa</h2>
-          <p className={styles.sectionText}>La afirmación es negativa → la tag es positiva:</p>
-          <ul className={styles.sectionList}>
-            <li>He doesn't like coffee, <strong>does he</strong>? (Él no le gusta el café, ¿o sí?)</li>
-            <li>You aren't ready, <strong>are you</strong>? (No estás listo, ¿o sí?)</li>
-            <li>They haven't called, <strong>have they</strong>? (No han llamado, ¿verdad?)</li>
-          </ul>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>
-            Practica las Question Tags en conversaciones cotidianas. Son muy comunes en el inglés hablado, especialmente en el inglés británico.
-          </p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica las Question Tags en conversaciones cotidianas. Son muy comunes en el inglés hablado, especialmente en el inglés británico.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

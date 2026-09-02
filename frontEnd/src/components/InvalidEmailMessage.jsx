@@ -1,13 +1,15 @@
-import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 function InvalidEmailMessage({ email }) {
   const isValidEmail = (email) => {
-    return email.includes('@') && email.includes('.');
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   };
 
+  if (!email) return null;
+
   return (
-    <Alert variant={isValidEmail(email) ? 'success' : 'danger'}>
+    <Alert variant={isValidEmail(email) ? 'success' : 'danger'} role={isValidEmail(email) ? 'status' : 'alert'}>
       {isValidEmail(email)
         ? 'El correo electrónico ingresado es válido.'
         : 'Por favor, ingrese un correo electrónico válido.'}

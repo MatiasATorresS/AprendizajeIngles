@@ -10,7 +10,7 @@
 .navBrand {
   font-size: 18px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
 }
 
 .navLinks {
@@ -20,18 +20,18 @@
 }
 
 .navLinks a {
-  color: #007bff !important;
+  color: #1f4d44 !important;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navLinks a:hover {
-  background-color: rgba(0, 123, 255, 0.08);
-  color: #0056b3 !important;
+  background-color: rgba(31, 77, 68, 0.08);
+  color: #143a33 !important;
 }
 
 /* ─── Layout principal ─── */
@@ -45,19 +45,19 @@
 .subjectHeader {
   margin-bottom: 36px;
   padding-bottom: 24px;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 2px solid #e4ded0;
 }
 
 .subjectTag {
   display: inline-block;
-  background: rgba(0, 123, 255, 0.08);
-  color: #007bff;
+  background: rgba(31, 77, 68, 0.08);
+  color: #1f4d44;
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 4px 14px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   margin-bottom: 14px;
 }
 
@@ -65,7 +65,7 @@
   font-size: 40px;
   font-weight: 800;
   margin-bottom: 12px;
-  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  background: linear-gradient(115deg, #1f4d44 0%, #e4572e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -76,7 +76,7 @@
 
 .subjectIntro {
   font-size: 1.05rem;
-  color: #6c757d;
+  color: #6c7268;
   line-height: 1.7;
   max-width: 780px;
 }
@@ -84,8 +84,8 @@
 /* ─── Secciones (Positivo, Negativo, Interrogativo...) ─── */
 .section {
   background: #ffffff;
-  border-radius: 14px;
-  border-left: 5px solid #007bff;
+  border-radius: var(--radius-md);
+  border-left: 5px solid #1f4d44;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   padding: 24px 28px;
   margin-bottom: 24px;
@@ -93,13 +93,13 @@
 }
 
 .section:hover {
-  box-shadow: 0 10px 28px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 10px 28px rgba(31, 77, 68, 0.12);
 }
 
 .sectionTitle {
   font-size: 18px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -112,13 +112,13 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #007bff;
+  background: #1f4d44;
   flex-shrink: 0;
 }
 
 .sectionText {
   font-size: 15px;
-  color: #495057;
+  color: #4a4f46;
   line-height: 1.65;
   margin-bottom: 14px;
 }
@@ -133,8 +133,8 @@
   padding: 8px 0 8px 18px;
   position: relative;
   font-size: 15px;
-  color: #495057;
-  border-bottom: 1px solid #f4f4f4;
+  color: #4a4f46;
+  border-bottom: 1px solid #efece2;
   line-height: 1.6;
 }
 
@@ -146,15 +146,15 @@
   content: '→';
   position: absolute;
   left: 0;
-  color: #007bff;
+  color: #1f4d44;
   font-size: 13px;
 }
 
 /* ─── Tablas de verbos ─── */
 .tableWrapper {
   background: #ffffff;
-  border-radius: 14px;
-  border-top: 5px solid #007bff;
+  border-radius: var(--radius-md);
+  border-top: 5px solid #1f4d44;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   margin-bottom: 24px;
@@ -163,10 +163,10 @@
 .tableTitle {
   font-size: 16px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
   padding: 18px 24px 14px;
   margin: 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f5f1e8;
 }
 
 .table {
@@ -179,20 +179,20 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: #6c757d;
+  color: #6c7268;
   border: none !important;
   padding: 12px 20px;
-  border-bottom: 2px solid #e9ecef !important;
-  background-color: #f8f9fa;
+  border-bottom: 2px solid #e4ded0 !important;
+  background-color: #f7f4ee;
 }
 
 .table tbody td {
   padding: 11px 20px;
   vertical-align: middle;
   font-size: 14px;
-  color: #495057;
+  color: #4a4f46;
   border: none !important;
-  border-bottom: 1px solid #f4f4f4 !important;
+  border-bottom: 1px solid #efece2 !important;
 }
 
 .table tbody tr:last-child td {
@@ -200,16 +200,16 @@
 }
 
 .table tbody tr:hover {
-  background-color: #f8f9ff;
+  background-color: #e6efe9;
 }
 
 .verbBase {
   font-weight: 600;
-  color: #343a40;
+  color: #232622;
 }
 
 .verbForm {
-  color: #007bff;
+  color: #1f4d44;
   font-weight: 600;
 }
 
@@ -223,7 +223,7 @@
 
 .levelCard {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
@@ -237,18 +237,18 @@
 }
 
 .levelHeaderBasic {
-  background: rgba(40, 167, 69, 0.1);
-  color: #28a745;
+  background: rgba(46, 125, 81, 0.1);
+  color: #2e7d51;
 }
 
 .levelHeaderMedium {
-  background: rgba(255, 193, 7, 0.12);
-  color: #856404;
+  background: rgba(240, 161, 41, 0.12);
+  color: #96610d;
 }
 
 .levelHeaderAdvanced {
-  background: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  background: rgba(192, 57, 43, 0.1);
+  color: #c0392b;
 }
 
 .levelBody {
@@ -263,9 +263,9 @@
 
 .levelList li {
   font-size: 14px;
-  color: #495057;
+  color: #4a4f46;
   padding: 7px 0;
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 1px solid #efece2;
   line-height: 1.55;
 }
 
@@ -275,9 +275,9 @@
 
 /* ─── Alert / Tip de práctica ─── */
 .practiceTip {
-  background: linear-gradient(135deg, rgba(0, 123, 255, 0.06) 0%, rgba(0, 212, 255, 0.06) 100%);
-  border: 1px solid rgba(0, 123, 255, 0.2);
-  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(31, 77, 68, 0.06) 0%, rgba(228, 87, 46, 0.06) 100%);
+  border: 1px solid rgba(31, 77, 68, 0.2);
+  border-radius: var(--radius-md);
   padding: 20px 24px;
   margin-top: 8px;
   display: flex;
@@ -293,19 +293,19 @@
 
 .practiceTipText {
   font-size: 15px;
-  color: #0056b3;
+  color: #143a33;
   line-height: 1.6;
   margin: 0;
 }
 
 /* ─── Ejemplo destacado (Alert primary) ─── */
 .exampleBox {
-  background: rgba(0, 123, 255, 0.05);
-  border: 1px solid rgba(0, 123, 255, 0.18);
-  border-radius: 10px;
+  background: rgba(31, 77, 68, 0.05);
+  border: 1px solid rgba(31, 77, 68, 0.18);
+  border-radius: var(--radius-sm);
   padding: 14px 18px;
   font-size: 15px;
-  color: #343a40;
+  color: #232622;
   line-height: 1.6;
   margin: 12px 0;
 }

@@ -16,5 +16,9 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    // El proyecto no valida PropTypes (JSX sin TypeScript ni prop-types).
+    'react/prop-types': 'off',
+    // El contenido educativo contiene comillas/apóstrofos literales.
+    'react/no-unescaped-entities': 'off',
   },
 }

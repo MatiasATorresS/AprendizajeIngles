@@ -1,109 +1,130 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
+import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
 import Badge from 'react-bootstrap/Badge';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
+import ContentNavbar from '../components/ContentNavbar';
+import ExerciseResults from '../components/ExerciseResults';
+import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Statistics.module.css';
 
-export default function Users_Admin({ username }) {
+export default function Statistics() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userExercises, setUserExercises] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState(null);
+  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  useDocumentMeta('Estadísticas · Aprendizaje de Inglés');
+
   useEffect(() => {
-    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/users`)
+    const controller = new AbortController();
+    api
+      .get('/users', { signal: controller.signal })
       .then((response) => setUsers(response.data))
-      .catch((error) => console.error('Error al obtener usuarios:', error));
+      .catch((err) => {
+        if (err.name !== 'CanceledError') {
+          console.error('Error al obtener usuarios:', err);
+          setError('No se pudo cargar la lista de usuarios.');
+        }
+      });
+    return () => controller.abort();
   }, []);
 
-  const handleViewStatistics = (user) => {
+  const handleViewStatistics = async (user) => {
     setLoading(true);
     setSelectedUser(user);
-    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/admin/user_exercises/${user.id}`)
-      .then((response) => {
-        setUserExercises(response.data);
-        setShowModal(true);
-      })
-      .catch((error) =>
-        console.error('Error al obtener ejercicios del usuario:', error)
-      )
-      .finally(() => setLoading(false));
+    setUserExercises([]);
+    setLoadError(null);
+    try {
+      const response = await api.get(`/admin/user_exercises/${user.id}`);
+      setUserExercises(response.data);
+      setShowModal(true);
+    } catch (err) {
+      console.error('Error al obtener ejercicios del usuario:', err);
+      setLoadError('No se pudieron cargar los ejercicios del usuario.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedUser(null);
     setUserExercises([]);
+    setLoadError(null);
   };
 
   return (
     <>
-      {/* ─── Navbar — sin tocar la lógica ─── */}
-      <Navbar variant="dark" expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.titleText}>Estadísticas</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={`me-auto ${styles.navLinks}`}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/users">Usuarios</Link>
-              <Link to="/statistics">Estadísticas</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <ContentNavbar brand="Panel de Estadísticas">
+            <Link to="/main">Inicio</Link>
+            <Link to="/users">Usuarios</Link>
+            <Link to="/statistics" aria-current="page">
+              Estadísticas
+            </Link>
+          </ContentNavbar>
 
-      {/* ─── Contenido principal ─── */}
-      <div className={styles.pageWrapper}>
-        <h1 className={styles.pageTitle}>Panel de Estadísticas</h1>
-        <p className={styles.pageSubtitle}>
-          Selecciona un usuario para ver el detalle de sus ejercicios y resultados.
-        </p>
+      <main id="main">
+        <div className={styles.pageWrapper}>
+          <h1 className={styles.pageTitle}>Panel de Estadísticas</h1>
+          <p className={styles.pageSubtitle}>
+            Selecciona un usuario para ver el detalle de sus ejercicios y
+            resultados.
+          </p>
 
-        <div className={styles.tableCard}>
-          <Table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Usuario</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>
-                    <div className={styles.userCell}>
-                      <div className={styles.avatar}>
-                        {user.username?.charAt(0).toUpperCase()}
-                      </div>
-                      <span className={styles.username}>{user.username}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <Button
-                      variant="info"
-                      className={styles.statsButton}
-                      onClick={() => handleViewStatistics(user)}>
-                      Ver Estadísticas →
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          {error && <p className={styles.emptyState}>{error}</p>}
+
+          {users.length > 0 && (
+            <div className={styles.tableCard}>
+              <Table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                      <td>
+                        <div className={styles.userCell}>
+                          <div className={styles.avatar}>
+                            {user.username?.charAt(0).toUpperCase()}
+                          </div>
+                          <span className={styles.username}>
+                            {user.username}
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <Button
+                          variant="info"
+                          type="button"
+                          className={styles.statsButton}
+                          onClick={() => handleViewStatistics(user)}>
+                          Ver Estadísticas →
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
         </div>
-      </div>
+      </main>
 
-      {/* ─── Modal de detalles ─── */}
-      <Modal show={showModal} onHide={handleCloseModal} size="xl" fullscreen={true}>
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        size="xl"
+        fullscreen={true}>
         <Modal.Header closeButton>
           <div>
             <p className={styles.modalTitle}>
@@ -120,6 +141,10 @@ export default function Users_Admin({ username }) {
             <div className={styles.emptyState}>
               <p>Cargando ejercicios...</p>
             </div>
+          ) : loadError ? (
+            <div className={styles.emptyState}>
+              <p>{loadError}</p>
+            </div>
           ) : userExercises.length === 0 ? (
             <div className={styles.emptyState}>
               <p>Este usuario no ha realizado ejercicios aún.</p>
@@ -130,13 +155,13 @@ export default function Users_Admin({ username }) {
                 let parsedResults = [];
                 try {
                   parsedResults = JSON.parse(exercise.results);
-                } catch (e) {
-                  console.error('Error al parsear resultados', e);
+                } catch (err) {
+                  console.error('Error al parsear resultados', err);
                 }
 
                 return (
                   <Accordion.Item
-                    eventKey={index.toString()}
+                    eventKey={String(index)}
                     key={exercise.id}
                     className={styles.exerciseItem}>
                     <Accordion.Header>
@@ -147,40 +172,11 @@ export default function Users_Admin({ username }) {
                       </Badge>
                     </Accordion.Header>
                     <Accordion.Body>
-                      {parsedResults.length > 0 ? (
-                        parsedResults.map((result, rIndex) => (
-                          <div key={rIndex} className={styles.resultRow}>
-                            <p className={styles.resultQuestion}>
-                              {rIndex + 1}. {result.question}
-                            </p>
-                            <div className={styles.resultMeta}>
-                              <span>
-                                <strong>Respuesta: </strong>
-                                <span className={result.isCorrect ? styles.correctText : styles.incorrectText}>
-                                  {result.userAnswer || 'Sin responder'}
-                                </span>
-                              </span>
-                              {!result.isCorrect && (
-                                <span>
-                                  <strong>Correcta: </strong>
-                                  <span className={styles.correctText}>
-                                    {result.correctAnswer}
-                                  </span>
-                                </span>
-                              )}
-                              <span className={result.isCorrect ? styles.badgeCorrect : styles.badgeIncorrect}>
-                                {result.isCorrect ? 'Correcta ✔' : 'Incorrecta ✘'}
-                              </span>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="text-muted">No hay detalles disponibles.</p>
-                      )}
-
-                      <p className={styles.scoreDisplay}>
-                        Puntaje total: {exercise.score} pts
-                      </p>
+                      <ExerciseResults
+                        results={parsedResults}
+                        score={exercise.score}
+                        emptyMessage="No hay detalles disponibles para este ejercicio."
+                      />
                     </Accordion.Body>
                   </Accordion.Item>
                 );
@@ -190,7 +186,11 @@ export default function Users_Admin({ username }) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="outline-secondary" style={{ borderRadius: '30px', padding: '8px 24px' }} onClick={handleCloseModal}>
+          <Button
+            variant="outline-secondary"
+            type="button"
+            className="rounded-pill px-4 py-2"
+            onClick={handleCloseModal}>
             Cerrar
           </Button>
         </Modal.Footer>

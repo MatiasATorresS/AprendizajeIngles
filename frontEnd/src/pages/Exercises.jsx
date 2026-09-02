@@ -1,37 +1,30 @@
-import React, { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
-import Axios from 'axios';
+import api from '../services/api';
 import { Link } from 'react-router-dom';
+import ContentNavbar from '../components/ContentNavbar';
+import ExerciseResults from '../components/ExerciseResults';
+import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Exercises.module.css';
 
-const Exercises = () => {
-  const [subject, setSubject] = useState('');
-  const [difficulty, setDifficulty] = useState('');
-  const [questions, setQuestions] = useState([]);
-  const [userAnswers, setUserAnswers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState([]);
-  const [error, setError] = useState(null);
-  const [questionsGenerated, setQuestionsGenerated] = useState(false);
-  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
-  const [resultsShown, setResultsShown] = useState(false);
-  const [score, setScore] = useState(0);
+const SUBJECTS = [
+  'Simple Past',
+  'Past Continuous',
+  'Present Perfect',
+  'Past Simple Passive',
+  'Present Simple',
+  'Present Simple Passive',
+];
 
-  Axios.defaults.withCredentials = true;
+const DIFFICULTIES = [
+  { value: 'easy', label: 'Fácil' },
+  { value: 'medium', label: 'Medio' },
+  { value: 'hard', label: 'Difícil' },
+];
 
-  const handleGenerateQuestions = async () => {
-    if (subject && difficulty) {
-      setIsLoading(true);
-      resetQuestions();
-      //const prompt = `Generate a JSON in an Array called exercises with 2 exercises/questions/conceptual questions from the ${subject} with the following difficulty: ${difficulty} , with 4 alternatives and their correct answer. Questions must be in the question field. Alternatives must be in the alternatives field. The correct answer is specified with the "correctAnswer" field in each question. Always include the difficulty field. These exercises vary depending on the difficulty mentioned so that people can improve their use of English. If the difficulty is easy, the question asked must have some clue.`;
-
-      //const prompt = `Create an Array named "exercises" containing 2 well-formulated exercises or conceptual questions related to ${subject}. These questions should be of ${difficulty} difficulty, each having 4 alternatives, where 3 must be incorrect and 1 should be the correct answer. Please structure the questions in the "question" field and the answer options in the "alternatives" field. Ensure to specify the correct answer using the "correctAnswer" field for each question. Additionally, always include the "difficulty" field. If the difficulty is set to "easy", make sure to provide a helpful clue in the question. If the difficulty is set to "medium", ensure that the questions are moderately challenging, requiring reasonable thought but not necessarily a clue. If the difficulty is set to "hard", make the questions challenging, possibly requiring deeper thought or creative problem-solving. Avoid providing clues for these questions.`;
-      const prompt = `Create a valid JSON format object containing an Array, for a web, called exercises that contains 8 well-formulated exercises or conceptual questions based on the topic of ${subject} for students who are studying English in the first year of secondary education in Chile with a difficulty level ${difficulty}. If the difficulty is easy, the questions should be simpler to understand and also have some help on it. If the difficulty is difficult, the questions should be longer/more complex/challenging for the user. With 4 different alternatives, where 3 of 4 alternatives are incorrect, that is, they are not related to the topic and 1 of them is the correct answer, it is important that the alternatives always be of ${difficulty} difficulty. Questions must be in the question field. Alternatives must be in the alternatives field where 3 are incorrect and 1 is correct. The correct answer always must be 1 of the 4 alternatives presented in the alternatives field, written in words, is specified with the "correctAnswer" field in each question. The difficulty must go in the difficulty field like this: {difficulty: '${difficulty}'}.
+const buildPrompt = (subject, difficulty) => `Create a valid JSON format object containing an Array, for a web, called exercises that contains 8 well-formulated exercises or conceptual questions based on the topic of ${subject} for students who are studying English in the first year of secondary education in Chile with a difficulty level ${difficulty}. If the difficulty is easy, the questions should be simpler to understand and also have some help on it. If the difficulty is difficult, the questions should be longer/more complex/challenging for the user. With 4 different alternatives, where 3 of 4 alternatives are incorrect, that is, they are not related to the topic and 1 of them is the correct answer, it is important that the alternatives always be of ${difficulty} difficulty. Questions must be in the question field. Alternatives must be in the alternatives field where 3 are incorrect and 1 is correct. The correct answer always must be 1 of the 4 alternatives presented in the alternatives field, written in words, is specified with the "correctAnswer" field in each question. The difficulty must go in the difficulty field like this: {difficulty: '${difficulty}'}.
       Here you have the JSON format of the exercises:
       {
     "exercises": [
@@ -50,279 +43,245 @@ const Exercises = () => {
 }      
       `;
 
-      console.log('Prompt:', prompt); // Agrega este mensaje de registro
+const scoreFor = (difficulty) =>
+  difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3;
 
-      try {
-        const response = await Axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/chat`, {
-          prompt,
-        });
+const Exercises = () => {
+  const [subject, setSubject] = useState('');
+  const [difficulty, setDifficulty] = useState('');
+  const [questions, setQuestions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState(null);
+  const [questionsGenerated, setQuestionsGenerated] = useState(false);
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
+  const [resultsShown, setResultsShown] = useState(false);
+  const [score, setScore] = useState(0);
 
-        let data = response.data;
+  useDocumentMeta('Generador de Ejercicios · Aprendizaje de Inglés');
 
-        // Como ahora mandamos un stream de texto, aseguramos que se convierta a un objeto JSON
-        // y eliminamos las posibles comillas invertidas de markdown (```json ... ```)
-        if (typeof data === 'string') {
-          const cleanText = data.replace(/```json/g, '').replace(/```/g, '').trim();
-          data = JSON.parse(cleanText);
-        }
+  const canGenerate = subject && difficulty;
 
-        console.log('Response from server:', data);
+  const handleGenerateQuestions = useCallback(async () => {
+    if (!canGenerate) return;
+    setIsLoading(true);
+    setQuestions([]);
+    setUserAnswers({});
+    setResults([]);
+    setResultsShown(false);
+    setError(null);
 
-        const generatedQuestions = data.exercises;
-        if (
-          Array.isArray(generatedQuestions) &&
-          generatedQuestions.length > 0
-        ) {
-          setQuestions(generatedQuestions);
+    try {
+      const response = await api.post('/chat', {
+        prompt: buildPrompt(subject, difficulty),
+      });
 
-          const initialUserAnswers = new Array(generatedQuestions.length).fill(
-            ''
-          );
-          setUserAnswers(initialUserAnswers);
-          setQuestionsGenerated(true);
-        } else {
-          setError(
-            'No se encontraron preguntas válidas para esta materia y dificultad.'
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        setError(
-          'Hubo un error al generar las preguntas. Por favor, inténtalo de nuevo.'
-        );
-      } finally {
-        setIsLoading(false);
+      let data = response.data;
+
+      // El servidor puede devolver un stream de texto; lo convertimos en JSON
+      if (typeof data === 'string') {
+        const cleanText = data
+          .replace(/```json/g, '')
+          .replace(/```/g, '')
+          .trim();
+        data = JSON.parse(cleanText);
       }
+
+      const generatedQuestions = data.exercises;
+      if (Array.isArray(generatedQuestions) && generatedQuestions.length > 0) {
+        setQuestions(generatedQuestions);
+        setQuestionsGenerated(true);
+      } else {
+        setError(
+          'No se encontraron preguntas válidas para esta materia y dificultad.'
+        );
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        'Hubo un error al generar las preguntas. Por favor, inténtalo de nuevo.'
+      );
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [canGenerate, subject, difficulty]);
 
-  const handleAnswerQuestion = (index, answer) => {
-    const updatedUserAnswers = [...userAnswers];
-    updatedUserAnswers[index] = answer;
-    setUserAnswers(updatedUserAnswers);
-    console.log('User Answers:', updatedUserAnswers);
-    const answered = updatedUserAnswers.every((ans) => ans !== '');
-    setAllQuestionsAnswered(answered);
-  };
+  const handleAnswerQuestion = useCallback(
+    (index, answer) => {
+      setUserAnswers((prev) => {
+        const updated = { ...prev, [index]: answer };
+        const answered =
+          questions.length > 0 && questions.every((_, i) => updated[i]);
+        setAllQuestionsAnswered(answered);
+        return updated;
+      });
+    },
+    [questions]
+  );
 
-  const handleCheckAnswers = async () => {
-    console.log('Check Answers Clicked');
+  const handleCheckAnswers = useCallback(async () => {
     let newScore = 0;
-    const results = questions.map((question, index) => {
+    const computedResults = questions.map((question, index) => {
       const userAnswer = userAnswers[index];
       const correctAnswer = question.correctAnswer;
       const isCorrect = userAnswer === correctAnswer;
-
-      console.log('Question:', question.question);
-      console.log('User Answer:', userAnswer);
-      console.log('Correct Answer:', correctAnswer);
-      console.log('Is Correct:', isCorrect);
-
-      let questionScore = 0;
-      if (question.difficulty === 'easy') {
-        questionScore = isCorrect ? 1 : 0;
-      } else if (question.difficulty === 'medium') {
-        questionScore = isCorrect ? 2 : 0;
-      } else if (question.difficulty === 'hard') {
-        questionScore = isCorrect ? 3 : 0;
-      }
-
-      newScore += questionScore;
-
-      return {
-        question: question.question,
-        userAnswer,
-        correctAnswer,
-        isCorrect,
-      };
+      newScore += isCorrect ? scoreFor(question.difficulty) : 0;
+      return { question: question.question, userAnswer, correctAnswer, isCorrect };
     });
     setScore(newScore);
-    console.log('Results:', results);
-    console.log('Puntaje: ', newScore);
-    setResults(results);
+    setResults(computedResults);
 
-    //resultados
     try {
-      // Envía los resultados al servidor
-      const response = await Axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/guardar-resultados`,
-        {
-          // Agrega el ID del usuario aquí
-          subject,
-          difficulty,
-          questions,
-          userAnswers,
-          results,
-          newScore,
-        }
-      );
-
-      console.log('Respuesta del servidor:', response.data);
-    } catch (error) {
-      console.error(error);
+      await api.post('/guardar-resultados', {
+        subject,
+        difficulty,
+        questions,
+        userAnswers,
+        results: computedResults,
+        newScore,
+      });
+    } catch (err) {
+      console.error(err);
     }
 
     setResultsShown(true);
-  };
+  }, [questions, userAnswers, subject, difficulty]);
 
-  const resetQuestions = () => {
-    setQuestions([]);
-    setUserAnswers([]);
-    setResults([]);
-    setError(null);
-  };
-
-  const handleRestartExercise = () => {
+  const restart = () => {
     window.location.reload();
   };
 
-  const renderGeneratedQuestions = () => {
-    return (
-      <div className={styles.generatedQuestions}>
-        <h2 className={styles.questionsHeader}>
-          Preguntas — <span>{subject}</span> ({difficulty})
-        </h2>
-        <ul>
-          {questions.map((question, index) => (
-            <div key={index} className={styles.question}>
-              <p className={styles.questionText}>
-                {index + 1}. {question.question}
-              </p>
-              {question.alternatives.map((alternative, alternativeIndex) => (
-                <div key={alternativeIndex}>
-                  <label className={styles.alternativeLabel}>
-                    <input
-                      type="radio"
-                      value={alternative}
-                      checked={userAnswers[index] === alternative}
-                      onChange={() => handleAnswerQuestion(index, alternative)}
-                    />
-                    {alternative}
-                  </label>
-                </div>
-              ))}
-            </div>
-          ))}
-        </ul>
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleCheckAnswers}
-          disabled={!allQuestionsAnswered || resultsShown}
-          className={styles.checkAnswersButton}>
-          Comprobar Respuestas
-        </Button>
-        {results.length > 0 && renderResults()}
-      </div>
-    );
-  };
-
-  const renderResults = () => {
-    return (
-      <div className={styles.resultsContainer}>
-        <h2 className={styles.resultsHeader}>Resultados</h2>
-        {results.map((result, index) => (
-          <div key={index} className={styles.result}>
-            <p><strong>Pregunta:</strong> {result.question}</p>
-            <p>
-              <strong>Tu respuesta: </strong>
-              <span className={result.isCorrect ? styles.correctAnswer : styles.incorrectAnswer}>
-                {result.userAnswer}
-              </span>
-            </p>
-            {!result.isCorrect && (
-              <p><strong>Respuesta correcta: </strong>
-                <span className={styles.correctAnswer}>{result.correctAnswer}</span>
-              </p>
-            )}
-          </div>
-        ))}
-        <p className={styles.scoreDisplay}>Puntaje total: {score} pts</p>
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleRestartExercise}
-          className={styles.restartButton}>
-          Iniciar Nuevo Ejercicio
-        </Button>
-      </div>
-    );
-  };
+  const questionGroups = useMemo(() => {
+    return questions.map((question, index) => {
+      const groupId = `question-${index}`;
+      return {
+        groupId,
+        question,
+        index,
+      };
+    });
+  }, [questions]);
 
   return (
     <div>
-      {/* ─── Navbar — sin tocar ─── */}
-      <Navbar expand="lg" className={styles.customNavbar}>
-        <Container>
-          <Navbar.Brand className={styles.navbarBrand}>
-            Ejercicios de Aprendizaje de Inglés
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={`me-auto ${styles.navLink}`}>
-              <Link to="/main">Inicio</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <ContentNavbar
+        brand="Ejercicios de Aprendizaje de Inglés"
+        right={<Link to="/main">Inicio</Link>}
+      />
 
-      {/* ─── Contenido principal ─── */}
-      <div className={styles.pageWrapper}>
-        <h1 className={styles.title}>Generador de Preguntas</h1>
-        <p className={styles.subtitle}>
-          Selecciona una materia y nivel de dificultad para generar ejercicios personalizados.
-        </p>
+      <main id="main">
+        <div className={styles.pageWrapper}>
+          <h1 className={`gradient-title ${styles.title}`}>Generador de Preguntas</h1>
+          <p className={styles.subtitle}>
+            Selecciona una materia y nivel de dificultad para generar ejercicios personalizados.
+          </p>
 
-        {/* Tarjeta del formulario */}
-        <div className={styles.formCard}>
-          <Form>
-            <Form.Group controlId="subject">
-              <Form.Label className={styles.formLabel}>Materia</Form.Label>
-              <Form.Control
-                as="select"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                className={styles.formControl}>
-                <option value="">Selecciona la materia</option>
-                <option value="Simple Past">Simple Past</option>
-                <option value="Past Continuous">Past Continuous</option>
-                <option value="Present Perfect">Present Perfect</option>
-                <option value="Past Simple Passive">Past Simple Passive</option>
-                <option value="Present Simple">Present Simple</option>
-                <option value="Present Simple Passive">Present Simple Passive</option>
-              </Form.Control>
-            </Form.Group>
+          <div className={styles.formCard}>
+            <Form onSubmit={(e) => e.preventDefault()}>
+              <Form.Group controlId="subject">
+                <Form.Label className={styles.formLabel}>Materia</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className={styles.formControl}>
+                  <option value="">Selecciona la materia</option>
+                  {SUBJECTS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId="difficulty">
-              <Form.Label className={styles.formLabel}>Dificultad</Form.Label>
-              <Form.Control
-                as="select"
-                value={difficulty}
-                onChange={(e) => setDifficulty(e.target.value)}
-                className={styles.formControl}>
-                <option value="">Selecciona la dificultad</option>
-                <option value="easy">Fácil</option>
-                <option value="medium">Medio</option>
-                <option value="hard">Difícil</option>
-              </Form.Control>
-            </Form.Group>
+              <Form.Group controlId="difficulty">
+                <Form.Label className={styles.formLabel}>Dificultad</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={difficulty}
+                  onChange={(e) => setDifficulty(e.target.value)}
+                  className={styles.formControl}>
+                  <option value="">Selecciona la dificultad</option>
+                  {DIFFICULTIES.map((d) => (
+                    <option key={d.value} value={d.value}>
+                      {d.label}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
 
-            <Button
-              variant="primary"
-              type="button"
-              onClick={handleGenerateQuestions}
-              disabled={isLoading || questionsGenerated}
-              className={styles.generateButton}>
-              {isLoading ? 'Generando...' : 'Generar Preguntas'}
-            </Button>
-          </Form>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={handleGenerateQuestions}
+                disabled={isLoading || questionsGenerated || !canGenerate}
+                className={styles.generateButton}>
+                {isLoading ? 'Generando...' : 'Generar Preguntas'}
+              </Button>
+            </Form>
+          </div>
+
+          {error && (
+            <Alert variant="danger" role="alert">
+              {error}
+            </Alert>
+          )}
+
+          {questions.length > 0 && !resultsShown && (
+            <div className={styles.generatedQuestions}>
+              <h2 className={styles.questionsHeader}>
+                Preguntas — <span>{subject}</span> ({difficulty})
+              </h2>
+
+              {questionGroups.map(({ groupId, question, index }) => (
+                <fieldset key={groupId} className={styles.question}>
+                  <legend className={styles.questionText}>
+                    <span className={styles.questionNumber}>{index + 1}.</span>{' '}
+                    {question.question}
+                  </legend>
+                  <div className={styles.alternatives}>
+                    {question.alternatives.map((alternative) => (
+                      <label key={alternative} className={styles.alternativeLabel}>
+                        <input
+                          type="radio"
+                          name={groupId}
+                          value={alternative}
+                          checked={userAnswers[index] === alternative}
+                          onChange={() => handleAnswerQuestion(index, alternative)}
+                        />
+                        <span>{alternative}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+
+              <Button
+                variant="primary"
+                type="button"
+                onClick={handleCheckAnswers}
+                disabled={!allQuestionsAnswered || resultsShown}
+                className={styles.checkAnswersButton}>
+                Comprobar Respuestas
+              </Button>
+            </div>
+          )}
+
+          {resultsShown && (
+            <div className={styles.resultsContainer}>
+              <ExerciseResults results={results} score={score} />
+              <Button
+                variant="primary"
+                type="button"
+                onClick={restart}
+                className={styles.restartButton}>
+                Iniciar Nuevo Ejercicio
+              </Button>
+            </div>
+          )}
         </div>
-
-        {error && <Alert variant="danger">{error}</Alert>}
-
-        {/* Preguntas generadas */}
-        {questions.length > 0 && renderGeneratedQuestions()}
-      </div>
+      </main>
     </div>
   );
 };

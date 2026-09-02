@@ -1,11 +1,11 @@
 /* User.module.css */
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-body);
   margin: 0;
   padding: 0;
-  background-color: #f0f0f0; /* Color de fondo principal */
-  color: #495057;
+  background-color: #f5f1e8; /* Color de fondo principal */
+  color: #4a4f46;
   height: 100vh;
 }
 
@@ -16,15 +16,15 @@ body {
 }
 
 .navbar {
-  background-color: #ffffff; /* Color de fondo de la barra de navegación */
-  color: #ffffff;
+  background-color: var(--color-surface); /* Color de fondo de la barra de navegación */
+  color: var(--color-ink);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .brand {
   font-size: 24px;
   font-weight: bold;
-  color: #ffffff;
+  color: var(--color-pine-dark);
 
   padding: 10px;
 }
@@ -37,7 +37,21 @@ body {
 
 .welcomeText {
   font-size: 16px;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.logoutButton {
+  border-radius: var(--radius-full);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+  padding: 6px 18px;
+  font-weight: 600;
+}
+
+.logoutButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  color: #fff;
 }
 
 .logoutLink {
@@ -53,7 +67,7 @@ body {
   font-size: 42px;
   font-weight: 800;
   margin-bottom: 15px;
-  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  background: linear-gradient(115deg, #1f4d44 0%, #e4572e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -63,7 +77,7 @@ body {
 
 .paragraph {
   font-size: 1.15rem;
-  color: #6c757d;
+  color: #6c7268;
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
@@ -80,10 +94,10 @@ body {
 
 .card {
   width: 320px;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: none;
-  background-color: #ffffff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  background-color: var(--color-surface);
+  box-shadow: 0 16px 40px rgba(35, 38, 34, 0.1);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
   overflow: hidden;
   border-top: 5px solid transparent;
@@ -95,14 +109,14 @@ body {
   transform: translateY(-8px);
 }
 
-.cardMaterials { border-top-color: #007bff; }
-.cardMaterials:hover { box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15); }
+.cardMaterials { border-top-color: #1f4d44; }
+.cardMaterials:hover { box-shadow: 0 20px 40px rgba(31, 77, 68, 0.18); }
 
-.cardExercises { border-top-color: #28a745; }
-.cardExercises:hover { box-shadow: 0 20px 40px rgba(40, 167, 69, 0.15); }
+.cardExercises { border-top-color: #2e7d51; }
+.cardExercises:hover { box-shadow: 0 20px 40px rgba(46, 125, 81, 0.18); }
 
-.cardStats { border-top-color: #17a2b8; }
-.cardStats:hover { box-shadow: 0 20px 40px rgba(23, 162, 184, 0.15); }
+.cardStats { border-top-color: #0e7490; }
+.cardStats:hover { box-shadow: 0 20px 40px rgba(14, 116, 144, 0.18); }
 
 .cardBody {
   padding: 35px 25px;
@@ -123,20 +137,20 @@ body {
   margin-bottom: 20px;
 }
 
-.iconMaterials { background: rgba(0, 123, 255, 0.1); color: #007bff; }
-.iconExercises { background: rgba(40, 167, 69, 0.1); color: #28a745; }
-.iconStats { background: rgba(23, 162, 184, 0.1); color: #17a2b8; }
+.iconMaterials { background: rgba(31, 77, 68, 0.1); color: #1f4d44; }
+.iconExercises { background: rgba(46, 125, 81, 0.1); color: #2e7d51; }
+.iconStats { background: rgba(14, 116, 144, 0.1); color: #0e7490; }
 
 .cardTitle {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 15px;
-  color: #343a40;
+  color: #232622;
 }
 
 .cardText {
   font-size: 15px;
-  color: #6c757d;
+  color: #6c7268;
   margin-bottom: 25px;
   flex-grow: 1;
 }

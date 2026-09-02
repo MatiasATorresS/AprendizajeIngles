@@ -1,7 +1,4 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function PresentSimplePassive() {
   const basicExamples = [
@@ -23,75 +20,52 @@ export default function PresentSimplePassive() {
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Voz Pasiva"
+      title="Present Simple Passive"
+      intro={
+        <p>
+          El <strong>Presente Simple Pasivo</strong> se utiliza para hablar de acciones realizadas por alguien o algo, sin enfocarse en quién las realiza. Se forma con <strong>am/is/are + participio pasado</strong>.
+        </p>
+      }>
+      <SubjectSection title="Estructura">
+        <p>Se utiliza el verbo <strong>to be</strong> (am/is/are) en presente + participio pasado del verbo principal.</p>
+        <SubjectList items={[
+          'The mail <strong>is delivered</strong> every morning. (El correo es entregado cada mañana)',
+          'Cars <strong>are made</strong> in factories. (Los autos son fabricados en fábricas)',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Voz Pasiva</span>
-          <h1 className={styles.subjectTitle}>Present Simple Passive</h1>
-          <p className={styles.subjectIntro}>
-            El <strong>Presente Simple Pasivo</strong> se utiliza para hablar de acciones realizadas por alguien o algo, sin enfocarse en quién las realiza. Se forma con <strong>am/is/are + participio pasado</strong>.
-          </p>
-        </div>
+      <SubjectSection title="Forma Negativa">
+        <p>Se añade <strong>not</strong> después de am/is/are: <strong>is not (isn't), are not (aren't)</strong>.</p>
+        <SubjectList items={[
+          "The report <strong>isn't finished</strong> yet. (El informe aún no está terminado)",
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Estructura</h2>
-          <p className={styles.sectionText}>Se utiliza el verbo <strong>to be</strong> (am/is/are) en presente + participio pasado del verbo principal.</p>
-          <ul className={styles.sectionList}>
-            <li>The mail <strong>is delivered</strong> every morning. (El correo es entregado cada mañana)</li>
-            <li>Cars <strong>are made</strong> in factories. (Los autos son fabricados en fábricas)</li>
-          </ul>
-        </div>
+      <SubjectSection title="Forma Interrogativa">
+        <p>Se invierte: <strong>Is/Are + sujeto + participio pasado?</strong></p>
+        <SubjectList items={[
+          '<strong>Is the homework done?</strong> (¿Está hecha la tarea?)',
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Forma Negativa</h2>
-          <p className={styles.sectionText}>Se añade <strong>not</strong> después de am/is/are: <strong>is not (isn't), are not (aren't)</strong>.</p>
-          <ul className={styles.sectionList}>
-            <li>The report <strong>isn't finished</strong> yet. (El informe aún no está terminado)</li>
-          </ul>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Forma Interrogativa</h2>
-          <p className={styles.sectionText}>Se invierte: <strong>Is/Are + sujeto + participio pasado?</strong></p>
-          <ul className={styles.sectionList}>
-            <li><strong>Is the homework done?</strong> (¿Está hecha la tarea?)</li>
-          </ul>
-        </div>
-
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>Practica la construcción de oraciones en Presente Simple Pasivo para describir acciones realizadas por terceros en diferentes contextos.</p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica la construcción de oraciones en Presente Simple Pasivo para describir acciones realizadas por terceros en diferentes contextos.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

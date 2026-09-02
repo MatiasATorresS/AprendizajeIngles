@@ -1,77 +1,74 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, VerbTable, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function PastSimple() {
   const regularVerbs = [
-    { infinitive: 'work', pastSimple: 'worked' },
-    { infinitive: 'play', pastSimple: 'played' },
-    { infinitive: 'visit', pastSimple: 'visited' },
-    { infinitive: 'help', pastSimple: 'helped' },
-    { infinitive: 'live', pastSimple: 'lived' },
-    { infinitive: 'clean', pastSimple: 'cleaned' },
-    { infinitive: 'jump', pastSimple: 'jumped' },
-    { infinitive: 'talk', pastSimple: 'talked' },
-    { infinitive: 'watch', pastSimple: 'watched' },
-    { infinitive: 'call', pastSimple: 'called' },
-    { infinitive: 'play', pastSimple: 'played' },
-    { infinitive: 'learn', pastSimple: 'learned' },
-    { infinitive: 'open', pastSimple: 'opened' },
-    { infinitive: 'close', pastSimple: 'closed' },
-    { infinitive: 'move', pastSimple: 'moved' },
-    { infinitive: 'listen', pastSimple: 'listened' },
-    { infinitive: 'cook', pastSimple: 'cooked' },
-    { infinitive: 'smile', pastSimple: 'smiled' },
-    { infinitive: 'like', pastSimple: 'liked' },
-    { infinitive: 'visit', pastSimple: 'visited' },
-    { infinitive: 'watch', pastSimple: 'watched' },
-    { infinitive: 'play', pastSimple: 'played' },
-    { infinitive: 'learn', pastSimple: 'learned' },
-    { infinitive: 'open', pastSimple: 'opened' },
-    { infinitive: 'close', pastSimple: 'closed' },
-    { infinitive: 'move', pastSimple: 'moved' },
-    { infinitive: 'listen', pastSimple: 'listened' },
-    { infinitive: 'cook', pastSimple: 'cooked' },
-    { infinitive: 'smile', pastSimple: 'smiled' },
-    { infinitive: 'like', pastSimple: 'liked' },
-    { infinitive: 'visit', pastSimple: 'visited' },
+    { base: 'work', form: 'worked' },
+    { base: 'play', form: 'played' },
+    { base: 'visit', form: 'visited' },
+    { base: 'help', form: 'helped' },
+    { base: 'live', form: 'lived' },
+    { base: 'clean', form: 'cleaned' },
+    { base: 'jump', form: 'jumped' },
+    { base: 'talk', form: 'talked' },
+    { base: 'watch', form: 'watched' },
+    { base: 'call', form: 'called' },
+    { base: 'play', form: 'played' },
+    { base: 'learn', form: 'learned' },
+    { base: 'open', form: 'opened' },
+    { base: 'close', form: 'closed' },
+    { base: 'move', form: 'moved' },
+    { base: 'listen', form: 'listened' },
+    { base: 'cook', form: 'cooked' },
+    { base: 'smile', form: 'smiled' },
+    { base: 'like', form: 'liked' },
+    { base: 'visit', form: 'visited' },
+    { base: 'watch', form: 'watched' },
+    { base: 'play', form: 'played' },
+    { base: 'learn', form: 'learned' },
+    { base: 'open', form: 'opened' },
+    { base: 'close', form: 'closed' },
+    { base: 'move', form: 'moved' },
+    { base: 'listen', form: 'listened' },
+    { base: 'cook', form: 'cooked' },
+    { base: 'smile', form: 'smiled' },
+    { base: 'like', form: 'liked' },
+    { base: 'visit', form: 'visited' },
   ];
 
   const irregularVerbs = [
-    { infinitive: 'go', pastSimple: 'went' },
-    { infinitive: 'eat', pastSimple: 'ate' },
-    { infinitive: 'buy', pastSimple: 'bought' },
-    { infinitive: 'have', pastSimple: 'had' },
-    { infinitive: 'do', pastSimple: 'did' },
-    { infinitive: 'be', pastSimple: 'was/were' },
-    { infinitive: 'begin', pastSimple: 'began' },
-    { infinitive: 'break', pastSimple: 'broke' },
-    { infinitive: 'choose', pastSimple: 'chose' },
-    { infinitive: 'come', pastSimple: 'came' },
-    { infinitive: 'drive', pastSimple: 'drove' },
-    { infinitive: 'find', pastSimple: 'found' },
-    { infinitive: 'give', pastSimple: 'gave' },
-    { infinitive: 'have', pastSimple: 'had' },
-    { infinitive: 'know', pastSimple: 'knew' },
-    { infinitive: 'leave', pastSimple: 'left' },
-    { infinitive: 'make', pastSimple: 'made' },
-    { infinitive: 'put', pastSimple: 'put' },
-    { infinitive: 'say', pastSimple: 'said' },
-    { infinitive: 'take', pastSimple: 'took' },
-    { infinitive: 'begin', pastSimple: 'began' },
-    { infinitive: 'break', pastSimple: 'broke' },
-    { infinitive: 'choose', pastSimple: 'chose' },
-    { infinitive: 'come', pastSimple: 'came' },
-    { infinitive: 'drive', pastSimple: 'drove' },
-    { infinitive: 'find', pastSimple: 'found' },
-    { infinitive: 'give', pastSimple: 'gave' },
-    { infinitive: 'know', pastSimple: 'knew' },
-    { infinitive: 'leave', pastSimple: 'left' },
-    { infinitive: 'make', pastSimple: 'made' },
-    { infinitive: 'put', pastSimple: 'put' },
-    { infinitive: 'say', pastSimple: 'said' },
-    { infinitive: 'take', pastSimple: 'took' },
+    { base: 'go', form: 'went' },
+    { base: 'eat', form: 'ate' },
+    { base: 'buy', form: 'bought' },
+    { base: 'have', form: 'had' },
+    { base: 'do', form: 'did' },
+    { base: 'be', form: 'was/were' },
+    { base: 'begin', form: 'began' },
+    { base: 'break', form: 'broke' },
+    { base: 'choose', form: 'chose' },
+    { base: 'come', form: 'came' },
+    { base: 'drive', form: 'drove' },
+    { base: 'find', form: 'found' },
+    { base: 'give', form: 'gave' },
+    { base: 'have', form: 'had' },
+    { base: 'know', form: 'knew' },
+    { base: 'leave', form: 'left' },
+    { base: 'make', form: 'made' },
+    { base: 'put', form: 'put' },
+    { base: 'say', form: 'said' },
+    { base: 'take', form: 'took' },
+    { base: 'begin', form: 'began' },
+    { base: 'break', form: 'broke' },
+    { base: 'choose', form: 'chose' },
+    { base: 'come', form: 'came' },
+    { base: 'drive', form: 'drove' },
+    { base: 'find', form: 'found' },
+    { base: 'give', form: 'gave' },
+    { base: 'know', form: 'knew' },
+    { base: 'leave', form: 'left' },
+    { base: 'make', form: 'made' },
+    { base: 'put', form: 'put' },
+    { base: 'say', form: 'said' },
+    { base: 'take', form: 'took' },
   ];
 
   const basicExamples = [
@@ -95,7 +92,6 @@ export default function PastSimple() {
       They <strong>visited</strong> their grandparents. (Ellos visitaron a sus
       abuelos)
     </li>,
-    // Agregar más ejemplos aquí
   ];
 
   const intermediateExamples = [
@@ -118,7 +114,6 @@ export default function PastSimple() {
     <li key="5">
       I <strong>chose</strong> the blue shirt. (Elegí la camisa azul)
     </li>,
-    // Agregar más ejemplos aquí
   ];
 
   const advancedExamples = [
@@ -143,135 +138,74 @@ export default function PastSimple() {
       She <strong>made</strong> a significant contribution to the project. (Ella
       <strong>realizó</strong> una contribución significativa al proyecto)
     </li>,
-    // Agregar más ejemplos aquí
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Tiempo Verbal"
+      title="Past Simple"
+      intro={
+        <p>
+          El <strong>Past Simple</strong> es un tiempo verbal en inglés que se
+          utiliza principalmente para expresar acciones que ocurrieron en el
+          pasado y ya han sido completadas.
+        </p>
+      }>
+      <SubjectSection title="Forma Positiva">
+        <p>
+          En la forma positiva, se utiliza el verbo en su forma pasada. Para la
+          mayoría de los verbos, esto implica agregar "-ed" al final del verbo.
+        </p>
+        <SubjectList items={[
+          'I <strong>worked</strong> (Trabajé)',
+          'She <strong>visited</strong> (Ella visitó)',
+          'They <strong>played</strong> (Jugaron)',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        {/* Encabezado */}
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Tiempo Verbal</span>
-          <h1 className={styles.subjectTitle}>Past Simple</h1>
-          <p className={styles.subjectIntro}>
-            El <strong>Past Simple</strong> es un tiempo verbal en inglés que se
-            utiliza principalmente para expresar acciones que ocurrieron en el
-            pasado y ya han sido completadas.
-          </p>
-        </div>
+      <SubjectSection title="Forma Negativa">
+        <p>
+          En la forma negativa, se utiliza el verbo auxiliar "did not" (didn't)
+          seguido del verbo en su forma base.
+        </p>
+        <SubjectList items={[
+          "I <strong>didn't work</strong> (No trabajé)",
+          "She <strong>didn't visit</strong> (Ella no visitó)",
+          "They <strong>didn't play</strong> (No jugaron)",
+        ]} />
+      </SubjectSection>
 
-        {/* Forma Positiva */}
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Forma Positiva</h2>
-          <p className={styles.sectionText}>
-            En la forma positiva, se utiliza el verbo en su forma pasada. Para la
-            mayoría de los verbos, esto implica agregar "-ed" al final del verbo.
-          </p>
-          <ul className={styles.sectionList}>
-            <li>I <strong>worked</strong> (Trabajé)</li>
-            <li>She <strong>visited</strong> (Ella visitó)</li>
-            <li>They <strong>played</strong> (Jugaron)</li>
-          </ul>
-        </div>
+      <SubjectSection title="Forma Interrogativa">
+        <p>
+          En la forma interrogativa, se utiliza el verbo auxiliar "did" seguido
+          del sujeto y el verbo en su forma base.
+        </p>
+        <SubjectList items={[
+          '<strong>Did I work?</strong> (¿Trabajé?)',
+          '<strong>Did she visit?</strong> (¿Ella visitó?)',
+          '<strong>Did they play?</strong> (¿Jugaron?)',
+        ]} />
+      </SubjectSection>
 
-        {/* Forma Negativa */}
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Forma Negativa</h2>
-          <p className={styles.sectionText}>
-            En la forma negativa, se utiliza el verbo auxiliar "did not" (didn't)
-            seguido del verbo en su forma base.
-          </p>
-          <ul className={styles.sectionList}>
-            <li>I <strong>didn't work</strong> (No trabajé)</li>
-            <li>She <strong>didn't visit</strong> (Ella no visitó)</li>
-            <li>They <strong>didn't play</strong> (No jugaron)</li>
-          </ul>
-        </div>
+      <VerbTable title="Verbos Regulares en el Past Simple" baseLabel="Verbo Infinitivo" formLabel="Pasado Simple" rows={regularVerbs} />
+      <VerbTable title="Verbos Irregulares en el Past Simple" baseLabel="Verbo Infinitivo" formLabel="Pasado Simple" rows={irregularVerbs} />
 
-        {/* Forma Interrogativa */}
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Forma Interrogativa</h2>
-          <p className={styles.sectionText}>
-            En la forma interrogativa, se utiliza el verbo auxiliar "did" seguido
-            del sujeto y el verbo en su forma base.
-          </p>
-          <ul className={styles.sectionList}>
-            <li><strong>Did I work?</strong> (¿Trabajé?)</li>
-            <li><strong>Did she visit?</strong> (¿Ella visitó?)</li>
-            <li><strong>Did they play?</strong> (¿Jugaron?)</li>
-          </ul>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        {/* Tabla Verbos Regulares */}
-        <div className={styles.tableWrapper}>
-          <h3 className={styles.tableTitle}>Verbos Regulares en el Past Simple</h3>
-          <table className={styles.table} style={{width:'100%'}}>
-            <thead><tr><th>Verbo Infinitivo</th><th>Pasado Simple</th></tr></thead>
-            <tbody>
-              {regularVerbs.map((verb, index) => (
-                <tr key={index}>
-                  <td className={styles.verbBase}>{verb.infinitive}</td>
-                  <td className={styles.verbForm}>{verb.pastSimple}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Tabla Verbos Irregulares */}
-        <div className={styles.tableWrapper}>
-          <h3 className={styles.tableTitle}>Verbos Irregulares en el Past Simple</h3>
-          <table className={styles.table} style={{width:'100%'}}>
-            <thead><tr><th>Verbo Infinitivo</th><th>Pasado Simple</th></tr></thead>
-            <tbody>
-              {irregularVerbs.map((verb, index) => (
-                <tr key={index}>
-                  <td className={styles.verbBase}>{verb.infinitive}</td>
-                  <td className={styles.verbForm}>{verb.pastSimple}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Ejemplos por nivel */}
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        {/* Consejo de práctica */}
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>
-            Practica utilizando el Past Simple en diferentes situaciones para mejorar tu comprensión y fluidez en inglés.
-          </p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica utilizando el Past Simple en diferentes situaciones para mejorar tu comprensión y fluidez en inglés.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

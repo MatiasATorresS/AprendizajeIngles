@@ -2,9 +2,9 @@
 
 /* ─── Navbar (sin tocar la lógica, solo estilos) ─── */
 .navbar {
-  background-color: #1a1d23;
+  background-color: #143a33;
   padding: 10px 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(20, 58, 51, 0.25);
 }
 
 .navbarBrand {
@@ -48,7 +48,7 @@
   font-weight: 600 !important;
   color: rgba(255, 255, 255, 0.75) !important;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: 4px 16px !important;
   transition: all 0.25s ease !important;
 }
@@ -71,7 +71,7 @@
   font-size: 42px;
   font-weight: 800;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  background: linear-gradient(115deg, #1f4d44 0%, #e4572e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -81,7 +81,7 @@
 
 .welcomeSubtitle {
   font-size: 1.05rem;
-  color: #6c757d;
+  color: #6c7268;
   margin-bottom: 48px;
 }
 
@@ -96,25 +96,25 @@
 .navCard {
   background-color: #ffffff;
   border: none;
-  border-radius: 16px;
-  border-top: 5px solid #007bff;
+  border-radius: var(--radius-md);
+  border-top: 5px solid #1f4d44;
   width: 300px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 16px 40px rgba(35, 38, 34, 0.1);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
   overflow: hidden;
 }
 
 .navCard:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(31, 77, 68, 0.18);
 }
 
 .navCardStats {
-  border-top-color: #17a2b8;
+  border-top-color: #0e7490;
 }
 
 .navCardStats:hover {
-  box-shadow: 0 20px 40px rgba(23, 162, 184, 0.15);
+  box-shadow: 0 20px 40px rgba(14, 116, 144, 0.18);
 }
 
 .cardBody {
@@ -133,24 +133,24 @@
   height: 64px;
   border-radius: 50%;
   margin-bottom: 18px;
-  background: rgba(0, 123, 255, 0.1);
-  color: #007bff;
+  background: rgba(31, 77, 68, 0.1);
+  color: #1f4d44;
 }
 
 .cardIconStats {
-  background: rgba(23, 162, 184, 0.1);
-  color: #17a2b8;
+  background: rgba(14, 116, 144, 0.1);
+  color: #0e7490;
 }
 
 .cardTitle {
   font-size: 18px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
   margin-bottom: 10px;
 }
 
 .cardDescription {
-  color: #6c757d;
+  color: #6c7268;
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 22px;
@@ -161,7 +161,7 @@
   display: inline-block;
   padding: 9px 24px;
   border-radius: 30px;
-  background-color: #007bff;
+  background-color: #1f4d44;
   color: #ffffff;
   font-weight: 600;
   font-size: 14px;
@@ -171,15 +171,15 @@
 }
 
 .cardLink:hover {
-  background-color: #0056b3;
+  background-color: #143a33;
   color: #ffffff;
   transform: scale(1.04);
 }
 
 .cardLinkStats {
-  background-color: #17a2b8;
+  background-color: #0e7490;
 }
 
 .cardLinkStats:hover {
-  background-color: #138496;
+  background-color: #0b5569;
 }

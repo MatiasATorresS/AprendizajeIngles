@@ -2,9 +2,9 @@
 
 /* ─── Navbar ─── */
 .navbar {
-  background-color: #1a1d23;
+  background-color: #143a33;
   padding: 10px 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(20, 58, 51, 0.25);
 }
 
 .titleText {
@@ -25,7 +25,7 @@
   font-size: 15px;
   font-weight: 500;
   padding: 6px 14px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -45,7 +45,7 @@
   font-size: 42px;
   font-weight: 800;
   margin-bottom: 6px;
-  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  background: linear-gradient(115deg, #1f4d44 0%, #e4572e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,17 +55,17 @@
 
 .pageSubtitle {
   font-size: 1.05rem;
-  color: #6c757d;
+  color: #6c7268;
   margin-bottom: 32px;
 }
 
 /* ─── Tarjeta contenedora de la tabla ─── */
 .tableCard {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: none;
-  border-top: 5px solid #007bff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-top: 5px solid #1f4d44;
+  box-shadow: 0 16px 40px rgba(35, 38, 34, 0.1);
   overflow: hidden;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .table thead tr {
-  background-color: #f8f9fa;
+  background-color: #f7f4ee;
 }
 
 .table thead th {
@@ -84,19 +84,19 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: #6c757d;
+  color: #6c7268;
   border: none !important;
   padding: 16px 20px;
-  border-bottom: 2px solid #e9ecef !important;
+  border-bottom: 2px solid #e4ded0 !important;
 }
 
 .table tbody td {
   padding: 14px 20px;
   vertical-align: middle;
   font-size: 14px;
-  color: #495057;
+  color: #4a4f46;
   border: none !important;
-  border-bottom: 1px solid #f0f0f0 !important;
+  border-bottom: 1px solid #f5f1e8 !important;
 }
 
 .table tbody tr {
@@ -104,7 +104,7 @@
 }
 
 .table tbody tr:hover {
-  background-color: #f8f9ff;
+  background-color: #e6efe9;
 }
 
 .table tbody tr:last-child td {
@@ -128,51 +128,58 @@
   font-size: 14px;
   font-weight: 700;
   flex-shrink: 0;
-  background: rgba(0, 123, 255, 0.12);
-  color: #007bff;
+  background: rgba(31, 77, 68, 0.12);
+  color: #1f4d44;
 }
 
 .username {
   font-weight: 600;
-  color: #343a40;
+  color: #232622;
 }
 
 /* ─── Badge de Rol ─── */
 .roleAdmin {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  background-color: rgba(0, 123, 255, 0.1);
-  color: #007bff;
+  background-color: rgba(31, 77, 68, 0.1);
+  color: #1f4d44;
 }
 
 .roleUser {
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  background-color: rgba(40, 167, 69, 0.1);
-  color: #28a745;
+  background-color: rgba(46, 125, 81, 0.1);
+  color: #2e7d51;
 }
 
 /* ─── ID badge ─── */
 .idBadge {
   display: inline-block;
-  background: #f0f4ff;
-  color: #6c84c4;
+  background: #e6efe9;
+  color: #1f4d44;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 10px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
 }
 
 /* ─── Email ─── */
 .emailText {
-  color: #6c757d;
+  color: #6c7268;
   font-size: 13px;
+}
+
+/* ─── Estado vacío / error ─── */
+.emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c7268;
 }

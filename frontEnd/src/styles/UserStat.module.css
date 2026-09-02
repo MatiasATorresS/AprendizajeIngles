@@ -4,27 +4,27 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-  color: #495057;
+  font-family: var(--font-body);
+  background-color: #f7f4ee;
+  color: #4a4f46;
 }
 
 /* Contenedor Principal */
 .userStatContainer {
-  background-color: #f0f0ef;
+  background-color: #f5f1e8;
   min-height: 100vh;
 }
 
 /* Navbar */
 .customNavbar {
-  background-color: #f8f9fa;
+  background-color: #f7f4ee;
   padding: 10px 0;
 }
 
 .navbarBrand {
   font-size: 24px;
   font-weight: bold;
-  color: #ffffff; /* Asegúrate de que el texto sea legible en el fondo azul */
+  color: var(--color-pine-dark); /* Asegúrate de que el texto sea legible en el fondo azul */
 }
 
 .navLink {
@@ -33,14 +33,14 @@ body {
 
 .link {
   text-decoration: none;
-  color: #007bff;
+  color: #1f4d44;
   font-weight: bold;
   font-size: 16px;
   transition: color 0.3s ease-in-out;
 }
 
 .link:hover {
-  color: #0056b3;
+  color: #143a33;
 }
 
 /* Título Principal */
@@ -48,7 +48,7 @@ body {
   font-size: 36px;
   font-weight: bold;
   margin: 20px 0;
-  color: #007bff;
+  color: #1f4d44;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -67,18 +67,18 @@ body {
 .table td {
   text-align: center;
   padding: 15px; /* Un poco más de espacio en las celdas */
-  border: 1px solid #dee2e6;
+  border: 1px solid #e4ded0;
 }
 
 .table th {
-  background-color: #007bff;
+  background-color: #1f4d44;
   color: #ffffff;
 }
 
 .table tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
+  background-color: #f7f4ee;
 }
 
 .table tbody tr:hover {
-  background-color: #e2e6ea;
+  background-color: #e4ded0;
 }

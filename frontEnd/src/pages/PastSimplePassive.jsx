@@ -1,7 +1,4 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function PastSimplePassive() {
   const basicExamples = [
@@ -23,59 +20,38 @@ export default function PastSimplePassive() {
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Voz Pasiva"
+      title="Past Simple Passive"
+      intro={
+        <p>
+          El <strong>Pasado Simple Pasivo</strong> se utiliza para describir una acción que fue realizada en el pasado. El foco está en la acción, no en quién la realizó. Se forma con <strong>was/were + participio pasado</strong>.
+        </p>
+      }>
+      <SubjectSection title="Estructura">
+        <p>Las expresiones en Pasado Simple Pasivo se forman con el verbo auxiliar <strong>was</strong> o <strong>were</strong> seguido del participio pasado del verbo principal.</p>
+        <SubjectList items={[
+          'The book <strong>was written</strong> in 1990. (El libro fue escrito en 1990)',
+          'The houses <strong>were built</strong> last year. (Las casas fueron construidas el año pasado)',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Voz Pasiva</span>
-          <h1 className={styles.subjectTitle}>Past Simple Passive</h1>
-          <p className={styles.subjectIntro}>
-            El <strong>Pasado Simple Pasivo</strong> se utiliza para describir una acción que fue realizada en el pasado. El foco está en la acción, no en quién la realizó. Se forma con <strong>was/were + participio pasado</strong>.
-          </p>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Estructura</h2>
-          <p className={styles.sectionText}>Las expresiones en Pasado Simple Pasivo se forman con el verbo auxiliar <strong>was</strong> o <strong>were</strong> seguido del participio pasado del verbo principal.</p>
-          <ul className={styles.sectionList}>
-            <li>The book <strong>was written</strong> in 1990. (El libro fue escrito en 1990)</li>
-            <li>The houses <strong>were built</strong> last year. (Las casas fueron construidas el año pasado)</li>
-          </ul>
-        </div>
-
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>Practica la construcción y el uso del Pasado Simple Pasivo para mejorar tus habilidades en inglés.</p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica la construcción y el uso del Pasado Simple Pasivo para mejorar tus habilidades en inglés.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

@@ -1,5 +1,4 @@
 // PasswordMismatch.jsx
-import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 function PasswordMismatch({ show }) {
@@ -8,7 +7,7 @@ function PasswordMismatch({ show }) {
   }
 
   return (
-    <Alert variant="danger">
+    <Alert variant="danger" role="alert">
       Las contraseñas no coinciden. Por favor, inténtalo de nuevo.
     </Alert>
   );

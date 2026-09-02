@@ -1,47 +1,35 @@
-import React, { useState } from 'react';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Alert from 'react-bootstrap/Alert'; // Agregada la importación de Alert
+import Alert from 'react-bootstrap/Alert';
 import './PasswordValidator.css';
 
 function PasswordValidator({ password }) {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const passwordRegex =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()\-_+=<>{}/[\]:;,.,\\^~#])[\w@$!%*?&()\-_+=<>{}/[\]:;,.,\\^~#]{8,}$/;
 
-  const validatePassword = (password) => {
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&()\-_+=<>{}/[\]:;,.\|\\^~#])[\w@$!%*?&()\-_+=<>{}/[\]:;,.\|\\^~#]{8,}$/;
-    return passwordRegex.test(password);
-  };
-
-  const isValid = validatePassword(password);
-
-  const toggleTooltip = () => {
-    setShowTooltip(!showTooltip);
-  };
+  const isValid = passwordRegex.test(password);
 
   return (
     <div className="password-validator">
       <OverlayTrigger
         placement="right"
+        trigger={['hover', 'focus']}
         overlay={
           <Tooltip id="password-tooltip">
             La contraseña debe tener al menos 8 caracteres, 1 mayúscula, 1
             número y 1 carácter especial.
           </Tooltip>
         }>
-        <span
-          className="info-icon"
-          onMouseEnter={toggleTooltip}
-          onMouseLeave={toggleTooltip}>
+        <button type="button" className="info-icon" aria-label="Ver requisitos de la contraseña">
           ?
-        </span>
+        </button>
       </OverlayTrigger>
       {isValid ? (
-        <Alert variant="success">
+        <Alert variant="success" role="status">
           La contraseña cumple con los requisitos.
         </Alert>
       ) : (
-        <Alert variant="danger">
+        <Alert variant="danger" role="alert">
           La contraseña no cumple con los requisitos.
         </Alert>
       )}

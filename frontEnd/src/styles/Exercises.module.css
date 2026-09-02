@@ -1,18 +1,18 @@
 /* Exercises.module.css — Diseño moderno consistente con el resto del proyecto */
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-body);
   margin: 0;
   padding: 0;
-  background-color: #f0f0ef;
-  color: #495057;
+  background-color: #f5f1e8;
+  color: #4a4f46;
   min-height: 100vh;
 }
 
 /* Navbar */
 .customNavbar {
-  background-color: #F8F9FA;
-  color: #000000;
+  background-color: #f7f4ee;
+  color: #232622;
   padding: 10px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -20,7 +20,7 @@ body {
 .navbarBrand {
   font-size: 20px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
 }
 
 .navLink {
@@ -28,7 +28,7 @@ body {
 }
 
 .navLink a {
-  color: #007bff;
+  color: #1f4d44;
   font-weight: 600;
   text-decoration: none;
   font-size: 15px;
@@ -36,7 +36,7 @@ body {
 }
 
 .navLink a:hover {
-  color: #0056b3;
+  color: #143a33;
 }
 
 /* ─── Contenedor principal ─── */
@@ -51,7 +51,7 @@ body {
   font-size: 42px;
   font-weight: 800;
   margin-bottom: 6px;
-  background: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+  background: linear-gradient(115deg, #1f4d44 0%, #e4572e 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -61,17 +61,17 @@ body {
 
 .subtitle {
   font-size: 1.05rem;
-  color: #6c757d;
+  color: #6c7268;
   margin-bottom: 36px;
 }
 
 /* ─── Tarjeta del formulario ─── */
 .formCard {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   border: none;
-  border-top: 5px solid #007bff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-top: 5px solid #1f4d44;
+  box-shadow: 0 16px 40px rgba(35, 38, 34, 0.1);
   padding: 32px 36px;
   margin-bottom: 32px;
 }
@@ -79,15 +79,15 @@ body {
 .formLabel {
   font-weight: 600;
   font-size: 14px;
-  color: #343a40;
+  color: #232622;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   margin-bottom: 6px;
 }
 
 .formControl {
-  border-radius: 10px !important;
-  border: 1px solid #dee2e6 !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid #e4ded0 !important;
   padding: 10px 14px !important;
   font-size: 15px !important;
   margin-bottom: 20px;
@@ -95,8 +95,8 @@ body {
 }
 
 .formControl:focus {
-  border-color: #007bff !important;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12) !important;
+  border-color: #1f4d44 !important;
+  box-shadow: 0 0 0 3px rgba(31, 77, 68, 0.18) !important;
 }
 
 /* Botones en píldora — mismo estilo que User.jsx */
@@ -126,22 +126,22 @@ body {
 .questionsHeader {
   font-size: 20px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
   margin-bottom: 24px;
   padding-bottom: 12px;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 2px solid #e4ded0;
 }
 
 .questionsHeader span {
-  color: #007bff;
+  color: #1f4d44;
 }
 
 /* Tarjeta individual de pregunta */
 .question {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: var(--radius-md);
   border: none;
-  border-left: 5px solid #007bff;
+  border-left: 5px solid #1f4d44;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   padding: 24px 28px;
   margin-bottom: 20px;
@@ -149,13 +149,13 @@ body {
 }
 
 .question:hover {
-  box-shadow: 0 10px 28px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 10px 28px rgba(31, 77, 68, 0.12);
 }
 
 .questionText {
   font-size: 16px;
   font-weight: 600;
-  color: #343a40;
+  color: #232622;
   margin-bottom: 16px;
 }
 
@@ -165,23 +165,23 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   margin-bottom: 8px;
   cursor: pointer;
   font-size: 15px;
-  color: #495057;
-  border: 1px solid #e9ecef;
-  background: #f8f9fa;
+  color: #4a4f46;
+  border: 1px solid #e4ded0;
+  background: #f7f4ee;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .alternativeLabel:hover {
-  background-color: #e8f0fe;
-  border-color: #007bff;
+  background-color: #fdf1da;
+  border-color: #1f4d44;
 }
 
 .alternativeLabel input[type="radio"] {
-  accent-color: #007bff;
+  accent-color: #1f4d44;
   width: 16px;
   height: 16px;
   flex-shrink: 0;
@@ -195,10 +195,10 @@ body {
 .resultsHeader {
   font-size: 20px;
   font-weight: 700;
-  color: #343a40;
+  color: #232622;
   margin-bottom: 20px;
   padding-bottom: 12px;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 2px solid #e4ded0;
 }
 
 .result {
@@ -207,7 +207,7 @@ body {
   padding: 18px 22px;
   margin-bottom: 14px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  border-left: 4px solid #dee2e6;
+  border-left: 4px solid #e4ded0;
 }
 
 .result p {
@@ -216,12 +216,12 @@ body {
 }
 
 .correctAnswer {
-  color: #198754;
+  color: #2e7d51;
   font-weight: 700;
 }
 
 .incorrectAnswer {
-  color: #dc3545;
+  color: #c0392b;
   font-weight: 700;
 }
 
@@ -229,6 +229,6 @@ body {
 .scoreDisplay {
   font-size: 22px;
   font-weight: 800;
-  color: #007bff;
+  color: #1f4d44;
   margin: 24px 0 20px;
 }

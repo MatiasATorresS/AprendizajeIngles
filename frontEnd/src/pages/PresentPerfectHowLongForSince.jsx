@@ -1,7 +1,4 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function PresentPerfectHowLongForSince() {
   const basicExamples = [
@@ -23,76 +20,53 @@ export default function PresentPerfectHowLongForSince() {
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Present Perfect"
+      title="How Long, For & Since"
+      intro={
+        <p>
+          El Present Perfect con <strong>"how long," "for"</strong> y <strong>"since"</strong> se usa para describir acciones que comenzaron en el pasado y continúan en el presente, enfocándose en la duración.
+        </p>
+      }>
+      <SubjectSection title="Uso de &quot;How Long&quot;">
+        <p>Se usa para preguntar sobre la duración de una acción que comenzó en el pasado y continúa en el presente. Se coloca al inicio de la pregunta.</p>
+        <SubjectList items={[
+          '<strong>How long</strong> have you been studying? (¿Cuánto tiempo llevas estudiando?)',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Present Perfect</span>
-          <h1 className={styles.subjectTitle}>How Long, For & Since</h1>
-          <p className={styles.subjectIntro}>
-            El Present Perfect con <strong>"how long," "for"</strong> y <strong>"since"</strong> se usa para describir acciones que comenzaron en el pasado y continúan en el presente, enfocándose en la duración.
-          </p>
-        </div>
+      <SubjectSection title="Uso de &quot;For&quot;">
+        <p>Se usa para indicar la duración total de una acción. Va seguido de un período de tiempo específico.</p>
+        <SubjectList items={[
+          'I have lived here <strong>for 10 years</strong>. (He vivido aquí por 10 años)',
+          'She has worked there <strong>for a long time</strong>. (Ha trabajado allí por mucho tiempo)',
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Uso de "How Long"</h2>
-          <p className={styles.sectionText}>Se usa para preguntar sobre la duración de una acción que comenzó en el pasado y continúa en el presente. Se coloca al inicio de la pregunta.</p>
-          <ul className={styles.sectionList}>
-            <li><strong>How long</strong> have you been studying? (¿Cuánto tiempo llevas estudiando?)</li>
-          </ul>
-        </div>
+      <SubjectSection title="Uso de &quot;Since&quot;">
+        <p>Se usa para indicar el punto de inicio de la acción. Va seguido de un momento específico en el tiempo.</p>
+        <SubjectList items={[
+          'He has worked here <strong>since 2018</strong>. (Ha trabajado aquí desde 2018)',
+          'I have known her <strong>since childhood</strong>. (La he conocido desde la infancia)',
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Uso de "For"</h2>
-          <p className={styles.sectionText}>Se usa para indicar la duración total de una acción. Va seguido de un período de tiempo específico.</p>
-          <ul className={styles.sectionList}>
-            <li>I have lived here <strong>for 10 years</strong>. (He vivido aquí por 10 años)</li>
-            <li>She has worked there <strong>for a long time</strong>. (Ha trabajado allí por mucho tiempo)</li>
-          </ul>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Uso de "Since"</h2>
-          <p className={styles.sectionText}>Se usa para indicar el punto de inicio de la acción. Va seguido de un momento específico en el tiempo.</p>
-          <ul className={styles.sectionList}>
-            <li>He has worked here <strong>since 2018</strong>. (Ha trabajado aquí desde 2018)</li>
-            <li>I have known her <strong>since childhood</strong>. (La he conocido desde la infancia)</li>
-          </ul>
-        </div>
-
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>Practica el uso de "how long," "for," y "since" en el Present Perfect para hablar sobre la duración de acciones pasadas con relevancia en el presente.</p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica el uso de "how long," "for," y "since" en el Present Perfect para hablar sobre la duración de acciones pasadas con relevancia en el presente.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

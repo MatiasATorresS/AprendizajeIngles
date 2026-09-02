@@ -1,63 +1,72 @@
 /* Login.module.css */
 
-/* Estilos generales */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif; /* Cambia la fuente según tus preferencias */
-}
-
-/* Estilos para el componente Login */
 .container {
-  background-color: #ffffff;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
 .form {
-  background-color: #f1f1f1;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   padding: 40px;
-  width: 400px; /* Ajusta el ancho según tus preferencias */
+  width: 420px;
+  max-width: 100%;
 }
 
 .title {
-  font-size: 24px;
-  margin-bottom: 10px;
-  text-align: center; /* Centra el texto */
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 24px;
+  color: var(--color-pine-dark);
 }
 
 .label {
-  font-size: 16px;
-  margin-top: 10px;
-  display: block; /* Asegura que las etiquetas estén en una línea separada */
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  margin-bottom: 6px;
+  display: block;
 }
 
 .input {
   width: 100%;
   padding: 8px;
-  margin-top: 5px; /* Ajusta el margen según tus preferencias */
-  box-sizing: border-box; /* Asegura que el tamaño total incluya el relleno y el borde */
+  box-sizing: border-box;
 }
 
 .button {
   width: 100%;
-  margin-top: 15px;
-  padding: 10px; /* Agrega relleno al botón para mejorar la apariencia */
-  cursor: pointer;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-pine);
+  border: none;
+  font-weight: 700;
+}
+
+.button:hover {
+  background: var(--color-pine-dark);
 }
 
 .text {
-  font-size: 14px;
-  text-align: center; /* Centra el texto */
-  margin-top: 10px; /* Ajusta el margen según tus preferencias */
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 16px;
+  color: var(--color-muted);
+  display: grid;
+  gap: 10px;
+  justify-items: center;
 }
 
-/* Estilos para los mensajes de error */
 .error-message {
-  color: red;
+  color: var(--color-danger);
   font-size: 14px;
   margin-top: 5px;
   text-align: center;

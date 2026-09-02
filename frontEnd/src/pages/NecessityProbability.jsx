@@ -1,7 +1,4 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, SubjectList, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function NecessityProbability() {
   const basicExamples = [
@@ -23,85 +20,60 @@ export default function NecessityProbability() {
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Verbos Modales"
+      title="Expresando Necesidad y Probabilidad"
+      intro={
+        <p>
+          En inglés, existen varias formas de expresar la necesidad y la probabilidad mediante verbos modales y expresiones que indican cuán cierta o necesaria es una acción.
+        </p>
+      }>
+      <SubjectSection title="Expresión de la Necesidad">
+        <p>
+          La necesidad se expresa mediante verbos modales como <strong>must</strong> (deber), <strong>have to</strong> (tener que) y <strong>should</strong> (debería). Indican que algo es necesario o requerido.
+        </p>
+        <SubjectList items={[
+          'You <strong>must</strong> finish your homework. (Debes terminar tu tarea)',
+          'She <strong>has to</strong> call the doctor. (Ella tiene que llamar al médico)',
+        ]} />
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Verbos Modales</span>
-          <h1 className={styles.subjectTitle}>Expresando Necesidad y Probabilidad</h1>
-          <p className={styles.subjectIntro}>
-            En inglés, existen varias formas de expresar la necesidad y la probabilidad mediante verbos modales y expresiones que indican cuán cierta o necesaria es una acción.
-          </p>
-        </div>
+      <SubjectSection title="Expresión de la Probabilidad">
+        <p>
+          La probabilidad se expresa con verbos como <strong>can</strong>, <strong>might</strong>, <strong>may</strong>, y expresiones como "it's likely" o "there's a possibility".
+        </p>
+        <SubjectList items={[
+          'It <strong>might</strong> rain tomorrow. (Podría llover mañana)',
+          'She <strong>may</strong> be at home. (Ella puede que esté en casa)',
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Expresión de la Necesidad</h2>
-          <p className={styles.sectionText}>
-            La necesidad se expresa mediante verbos modales como <strong>must</strong> (deber), <strong>have to</strong> (tener que) y <strong>should</strong> (debería). Indican que algo es necesario o requerido.
-          </p>
-          <ul className={styles.sectionList}>
-            <li>You <strong>must</strong> finish your homework. (Debes terminar tu tarea)</li>
-            <li>She <strong>has to</strong> call the doctor. (Ella tiene que llamar al médico)</li>
-          </ul>
-        </div>
+      <SubjectSection title="Alta Probabilidad">
+        <p>
+          Para expresar alta probabilidad se usan <strong>must</strong> (debe ser), <strong>can't</strong> (no puede ser), y <strong>couldn't</strong>.
+        </p>
+        <SubjectList items={[
+          'He <strong>must</strong> be tired. (Debe estar cansado)',
+          "She <strong>can't</strong> be home — I saw her leave. (No puede estar en casa)",
+        ]} />
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Expresión de la Probabilidad</h2>
-          <p className={styles.sectionText}>
-            La probabilidad se expresa con verbos como <strong>can</strong>, <strong>might</strong>, <strong>may</strong>, y expresiones como "it's likely" o "there's a possibility".
-          </p>
-          <ul className={styles.sectionList}>
-            <li>It <strong>might</strong> rain tomorrow. (Podría llover mañana)</li>
-            <li>She <strong>may</strong> be at home. (Ella puede que esté en casa)</li>
-          </ul>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Alta Probabilidad</h2>
-          <p className={styles.sectionText}>
-            Para expresar alta probabilidad se usan <strong>must</strong> (debe ser), <strong>can't</strong> (no puede ser), y <strong>couldn't</strong>.
-          </p>
-          <ul className={styles.sectionList}>
-            <li>He <strong>must</strong> be tired. (Debe estar cansado)</li>
-            <li>She <strong>can't</strong> be home — I saw her leave. (No puede estar en casa)</li>
-          </ul>
-        </div>
-
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>
-            Practica el uso de estas expresiones para comunicar efectivamente la necesidad y la probabilidad en inglés.
-          </p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica el uso de estas expresiones para comunicar efectivamente la necesidad y la probabilidad en inglés.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

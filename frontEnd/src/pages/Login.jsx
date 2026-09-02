@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Axios from 'axios';
+import api from '../services/api';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import LoginError from '../components/LoginError';
+import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Login.module.css';
 
 function Login() {
@@ -13,8 +14,8 @@ function Login() {
   const [loginStatus, setLoginStatus] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  Axios.defaults.withCredentials = true;
   const navigate = useNavigate();
+  useDocumentMeta('Iniciar sesión · Aprendizaje de Inglés');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ function Login() {
     setPasswordError('');
 
     try {
-      const response = await Axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`, {
+      const response = await api.post('/login', {
         email,
         password,
       });
@@ -30,10 +31,10 @@ function Login() {
       if (response.data.message) {
         setLoginStatus(response.data.message);
       } else {
-        // Guardamos los datos del usuario en el teléfono/navegador para que funcione en móviles
+        // Guardamos los datos del usuario en el navegador para que funcione en móviles
         localStorage.setItem('loggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(response.data[0]));
-        
+
         setLoginStatus(response.data[0].username);
         navigate('/main');
       }
@@ -52,27 +53,18 @@ function Login() {
   };
 
   useEffect(() => {
-    Axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:3031'}/login`).then((response) => {
-      if (response.data.loggedIn == true) {
+    api.get('/login').then((response) => {
+      if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0].username);
         navigate('/main');
       }
     });
-  }, []);
+  }, [navigate]);
 
   return (
-    <div>
-      <Container
-        className={`d-flex align-items-center justify-content-center ${styles.container}`}
-        style={{ minHeight: '100vh' }}>
-        <Form
-          className={`custom-form text-justify ${styles.form}`}
-          style={{
-            border: '2px solid #ccc',
-            borderRadius: '10px',
-            padding: '40px',
-          }}
-          onSubmit={handleLogin}>
+    <main id="main">
+      <Container className={`d-flex align-items-center justify-content-center ${styles.container}`}>
+        <Form className={`text-justify ${styles.form}`} onSubmit={handleLogin} noValidate>
           <h2 className={styles.title}>Ingresar</h2>
           <Form.Group controlId="formBasicEmail">
             <Form.Label className={styles.label}>Dirección Email</Form.Label>
@@ -82,7 +74,9 @@ function Login() {
               placeholder="Ingresar email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
               required
+              isInvalid={!!emailError}
             />
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
@@ -93,30 +87,31 @@ function Login() {
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
               required
+              isInvalid={!!passwordError}
             />
           </Form.Group>
-          <Button
-            variant="primary"
-            type="submit"
-            className={`mb-3 ${styles.button}`}>
+          <Button variant="primary" type="submit" className={`mb-3 ${styles.button}`}>
             Iniciar sesión
           </Button>
-          <LoginError emailError={emailError} passwordError={passwordError} />{' '}
-          {/* Usa el componente LoginError */}
+          <LoginError emailError={emailError} passwordError={passwordError} />
+          {loginStatus && !emailError && !passwordError && (
+            <p className="text-danger mt-2" role="alert">
+              {loginStatus}
+            </p>
+          )}
           <div className={`text-center ${styles.text}`}>
             <span>¿No tienes una cuenta?</span>
             <Link to="/register">
-              <Button
-                variant="secondary"
-                className={`ml-2 custom-create-account-button ${styles.button}`}>
+              <Button variant="secondary" type="button" className={`ml-2 ${styles.button}`}>
                 Registrarse
               </Button>
             </Link>
           </div>
         </Form>
       </Container>
-    </div>
+    </main>
   );
 }
 

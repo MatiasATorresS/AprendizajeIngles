@@ -1,19 +1,16 @@
-import React from 'react';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import styles from '../styles/SubjectPage.module.css';
+import SubjectLayout, { SubjectSection, VerbTable, LevelCard, LevelsRow, PracticeTip } from '../components/SubjectLayout';
 
 export default function EverNever() {
   const regularVerbs = [
-    { infinitive: 'work', pastParticiple: 'worked' },
-    { infinitive: 'play', pastParticiple: 'played' },
-    { infinitive: 'visit', pastParticiple: 'visited' },
+    { base: 'work', form: 'worked' },
+    { base: 'play', form: 'played' },
+    { base: 'visit', form: 'visited' },
   ];
 
   const irregularVerbs = [
-    { infinitive: 'go', pastParticiple: 'gone' },
-    { infinitive: 'eat', pastParticiple: 'eaten' },
-    { infinitive: 'buy', pastParticiple: 'bought' },
+    { base: 'go', form: 'gone' },
+    { base: 'eat', form: 'eaten' },
+    { base: 'buy', form: 'bought' },
   ];
 
   const basicExamples = [
@@ -33,87 +30,46 @@ export default function EverNever() {
   ];
 
   return (
-    <div>
-      <Navbar expand="lg" className={styles.navbar}>
-        <Container>
-          <Navbar.Brand className={styles.navBrand}>English Learning Hub</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className={styles.navLinks}>
-              <Link to="/main">Inicio</Link>
-              <Link to="/materials">Materiales</Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <SubjectLayout
+      tag="Present Perfect"
+      title="Present Perfect: Ever & Never"
+      intro={
+        <p>
+          Los adverbios <strong>"ever"</strong> y <strong>"never"</strong> se refieren a un tiempo no identificado, anterior al presente.
+          "Ever" se utiliza en preguntas y oraciones negativas. "Never" significa "nunca antes de ahora".
+        </p>
+      }>
+      <SubjectSection title="Uso de &quot;Ever&quot;">
+        <p>
+          Se utiliza en preguntas, preguntas negativas y oraciones negativas con "nothing + ever" o "nobody + ever".
+        </p>
+      </SubjectSection>
 
-      <div className={styles.pageWrapper}>
-        <div className={styles.subjectHeader}>
-          <span className={styles.subjectTag}>Present Perfect</span>
-          <h1 className={styles.subjectTitle}>Present Perfect: Ever & Never</h1>
-          <p className={styles.subjectIntro}>
-            Los adverbios <strong>"ever"</strong> y <strong>"never"</strong> se refieren a un tiempo no identificado, anterior al presente.
-            "Ever" se utiliza en preguntas y oraciones negativas. "Never" significa "nunca antes de ahora".
-          </p>
-        </div>
+      <SubjectSection title="Uso de &quot;Never&quot;">
+        <p>
+          Significa "nunca antes de ahora" y se coloca antes del verbo principal (en "past participle").
+        </p>
+      </SubjectSection>
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Uso de "Ever"</h2>
-          <p className={styles.sectionText}>
-            Se utiliza en preguntas, preguntas negativas y oraciones negativas con "nothing + ever" o "nobody + ever".
-          </p>
-        </div>
+      <VerbTable title="Verbos Regulares en el Present Perfect" baseLabel="Verbo Infinitivo" formLabel="Participio Pasado" rows={regularVerbs} />
+      <VerbTable title="Verbos Irregulares en el Present Perfect" baseLabel="Verbo Infinitivo" formLabel="Participio Pasado" rows={irregularVerbs} />
 
-        <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Uso de "Never"</h2>
-          <p className={styles.sectionText}>
-            Significa "nunca antes de ahora" y se coloca antes del verbo principal (en "past participle").
-          </p>
-        </div>
+      <h2>Ejemplos en Diferentes Niveles</h2>
+      <LevelsRow>
+        <LevelCard level="basic" title="🟢 Nivel Básico">
+          {basicExamples}
+        </LevelCard>
+        <LevelCard level="medium" title="🟡 Nivel Medio">
+          {intermediateExamples}
+        </LevelCard>
+        <LevelCard level="advanced" title="🔴 Nivel Avanzado">
+          {advancedExamples}
+        </LevelCard>
+      </LevelsRow>
 
-        <div className={styles.tableWrapper}>
-          <h3 className={styles.tableTitle}>Verbos Regulares en el Present Perfect</h3>
-          <table className={styles.table} style={{width:'100%'}}>
-            <thead><tr><th>Verbo Infinitivo</th><th>Participio Pasado</th></tr></thead>
-            <tbody>{regularVerbs.map((verb, i) => (
-              <tr key={i}><td className={styles.verbBase}>{verb.infinitive}</td><td className={styles.verbForm}>{verb.pastParticiple}</td></tr>
-            ))}</tbody>
-          </table>
-        </div>
-
-        <div className={styles.tableWrapper}>
-          <h3 className={styles.tableTitle}>Verbos Irregulares en el Present Perfect</h3>
-          <table className={styles.table} style={{width:'100%'}}>
-            <thead><tr><th>Verbo Infinitivo</th><th>Participio Pasado</th></tr></thead>
-            <tbody>{irregularVerbs.map((verb, i) => (
-              <tr key={i}><td className={styles.verbBase}>{verb.infinitive}</td><td className={styles.verbForm}>{verb.pastParticiple}</td></tr>
-            ))}</tbody>
-          </table>
-        </div>
-
-        <h2 className={styles.sectionTitle} style={{marginBottom:'16px'}}>Ejemplos en Diferentes Niveles</h2>
-        <div className={styles.levelsWrapper}>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderBasic}`}>🟢 Nivel Básico</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{basicExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderMedium}`}>🟡 Nivel Medio</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{intermediateExamples}</ul></div>
-          </div>
-          <div className={styles.levelCard}>
-            <div className={`${styles.levelHeader} ${styles.levelHeaderAdvanced}`}>🔴 Nivel Avanzado</div>
-            <div className={styles.levelBody}><ul className={styles.levelList}>{advancedExamples}</ul></div>
-          </div>
-        </div>
-
-        <div className={styles.practiceTip}>
-          <span className={styles.practiceTipIcon}>💡</span>
-          <p className={styles.practiceTipText}>
-            Practica el uso de "ever" y "never" en el Present Perfect para expresar experiencias y situaciones en tu vida.
-          </p>
-        </div>
-      </div>
-    </div>
+      <PracticeTip>
+        Practica el uso de "ever" y "never" en el Present Perfect para expresar experiencias y situaciones en tu vida.
+      </PracticeTip>
+    </SubjectLayout>
   );
 }

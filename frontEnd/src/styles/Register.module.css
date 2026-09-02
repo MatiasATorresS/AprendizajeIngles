@@ -1,77 +1,91 @@
 /* Register.module.css */
 
-/* Estilos para el componente Register */
-
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif; /* Cambia la fuente según tus preferencias */
-}
-
 .container {
-  background-color: #ffffff;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
 .form {
-  background-color: #f1f1f1;
-  border: 2px solid #ffffff;
-  border-radius: 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   padding: 40px;
+  width: 440px;
+  max-width: 100%;
 }
 
 .title {
-  font-size: 24px;
-  margin-bottom: 10px;
-  text-align: center; /* Centra el texto */
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--color-pine-dark);
 }
 
 .label {
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  margin-bottom: 6px;
   display: block;
 }
 
 .input {
   width: 100%;
   padding: 8px;
-  margin-top: 5px; /* Ajusta el margen según tus preferencias */
-  box-sizing: border-box; /* Asegura que el tamaño total incluya el relleno y el borde */
+  box-sizing: border-box;
 }
 
 .button {
   width: 100%;
-  margin-top: 15px;
-  padding: 10px; /* Agrega relleno al botón para mejorar la apariencia */
-  cursor: pointer;
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
 }
 
 .text {
-  font-size: 14px;
+  font-size: 0.9rem;
   text-align: center;
-  margin-top: 10px; /* Ajusta el margen según tus preferencias */
+  margin-top: 16px;
+  color: var(--color-muted);
+  display: grid;
+  gap: 10px;
+  justify-items: center;
 }
 
-/* Estilos para los mensajes de error */
 .error-message {
-  color: red;
+  color: var(--color-danger);
   font-size: 14px;
   margin-top: 5px;
   text-align: center;
 }
 
-/* Estilo personalizado para el botón de registro */
 .register-button {
   margin-top: 15px;
-  background-color: #28a745; /* Cambia el color de fondo según tus preferencias */
-  color: #fff; /* Cambia el color del texto según tus preferencias */
+  background-color: var(--color-pine);
+  color: #fff;
+  border: none;
 }
 
-/* Estilo personalizado para el botón de inicio de sesión */
+.register-button:hover {
+  background-color: var(--color-pine-dark);
+  color: #fff;
+}
+
 .log-account-button {
   margin-top: 15px;
-  background-color: #007bff; /* Cambia el color de fondo según tus preferencias */
-  color: #fff; /* Cambia el color del texto según tus preferencias */
+  background-color: transparent;
+  color: var(--color-vermillion-dark);
+  border: 2px solid var(--color-vermillion);
+}
+
+.log-account-button:hover {
+  background-color: var(--color-vermillion);
+  color: #fff;
 }

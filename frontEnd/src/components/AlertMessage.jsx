@@ -1,7 +1,12 @@
-import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 
-function AlertMessage({ message }) {
-  return <div className="text-danger mt-2">{message}</div>;
+function AlertMessage({ message, variant = 'danger' }) {
+  if (!message) return null;
+  return (
+    <Alert variant={variant} role="alert">
+      {message}
+    </Alert>
+  );
 }
 
 export default AlertMessage;
