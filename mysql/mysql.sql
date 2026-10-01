@@ -50,6 +50,7 @@ INSERT INTO `materias_ingles` (`id`,`nombre`,`descripcion`,`unidad_id`) VALUES (
 
 CREATE TABLE `user_exercises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attempt_id` char(36) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `difficulty` varchar(255) DEFAULT NULL,
@@ -59,6 +60,7 @@ CREATE TABLE `user_exercises` (
   `score` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
+  UNIQUE KEY `attempt_id` (`attempt_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_exercises_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `login` (`id`)
 )

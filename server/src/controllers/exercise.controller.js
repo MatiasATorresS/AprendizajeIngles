@@ -5,7 +5,7 @@ function saveResults(req, res) {
   const userId = req.session.user[0].id;
   const { userAnswers } = req.body || {};
   const pending = req.session.pendingExercise;
-  if (!pending) return res.status(409).json({ message: 'Genera un ejercicio antes de responder' });
+  if (!pending?.id) return res.status(409).json({ message: 'Genera un ejercicio nuevo antes de responder' });
   const grade = gradeExercise(pending, userAnswers);
   if (!grade) {
     return res.status(400).json({ message: 'Respuestas inválidas o incompletas' });
@@ -14,9 +14,12 @@ function saveResults(req, res) {
   const { results, score: newScore } = grade;
 
   exerciseService.save(
-    { userId, subject, difficulty, questions, userAnswers, results, newScore },
+    { attemptId: pending.id, userId, subject, difficulty, questions, userAnswers, results, newScore },
     (err) => {
       if (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+          return res.status(409).send({ message: 'Este ejercicio ya fue guardado' });
+        }
         console.error('Error al guardar los resultados:', err);
         res.status(500).send({ message: 'Error al guardar los resultados' });
         return;

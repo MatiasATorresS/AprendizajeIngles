@@ -86,7 +86,9 @@ function Login() {
       navigate('/main');
     } catch (error) {
       setSubmitting(false);
-      if (error.response && error.response.status === 401) {
+      if (error.response?.status === 429) {
+        setFormError(error.response.data.message);
+      } else if (error.response && error.response.status === 401) {
         const message = error.response.data?.message;
         if (message === 'User does not exist') {
           setServerErrors((prev) => ({ ...prev, email: 'El correo no está registrado.' }));

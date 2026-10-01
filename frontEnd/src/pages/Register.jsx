@@ -70,7 +70,7 @@ function Register() {
       navigate('/login');
     } catch (error) {
       console.error('Error registering:', error);
-      setSubmitError('No se pudo crear la cuenta. Inténtalo de nuevo más tarde.');
+      setSubmitError(error.response?.data?.message || 'No se pudo crear la cuenta. Inténtalo de nuevo más tarde.');
       setSubmitting(false);
     }
   };

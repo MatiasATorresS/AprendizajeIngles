@@ -79,7 +79,9 @@ const Exercises = () => {
     } catch (err) {
       console.error(err);
       setError(
-        'Hubo un error al generar las preguntas. Por favor, inténtalo de nuevo.'
+        err.response?.status === 429
+          ? err.response.data.message
+          : 'Hubo un error al generar las preguntas. Por favor, inténtalo de nuevo.'
       );
     } finally {
       setIsLoading(false);

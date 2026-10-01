@@ -59,6 +59,7 @@ Si deseas ejecutar este proyecto en tu computadora:
 ### 2. Base de Datos
 1. Crea una base de datos llamada `signup` en tu MySQL local.
 2. Importa el archivo `mysql/mysql.sql`.
+   Si ya tienes una base creada, ejecuta una sola vez `mysql/migrations/001_unique_exercise_attempt.sql` antes de actualizar el backend.
 
 ### 3. Backend
 1. Entra a la carpeta `server/`: `cd server`
@@ -96,6 +97,8 @@ El proyecto está configurado para desplegarse fácilmente en:
 ## Evaluación de la tesis
 
 El [protocolo de evaluación](docs/protocolo-evaluacion.md) define una propuesta de piloto, indicadores y límites de interpretación. Las preguntas generadas por IA necesitan revisión pedagógica antes de emplearse como instrumento de medición. El almacén de sesiones en memoria debe sustituirse por uno persistente y compartido para despliegues con múltiples instancias o reinicios frecuentes.
+
+El backend limita el inicio de sesión a 6 intentos por IP y correo y 120 por IP cada 15 minutos; el registro a 10 por IP por hora; y la generación a 8 solicitudes por usuario por hora y 24 por día. Los contadores están en memoria y se reinician al reiniciar el servidor. Para usar varias instancias se necesitará un almacén de límites compartido.
 
 ---
 Desarrollado por [MatiasATorresS](https://github.com/MatiasATorresS)

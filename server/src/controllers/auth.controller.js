@@ -1,14 +1,19 @@
 const authService = require('../services/auth.service');
+const { validateRegistration } = require('../services/registration-validation.service');
 
 function publicUser(user) {
   return { id: user.id, username: user.username, email: user.email, role: user.role };
 }
 
 function register(req, res) {
-  const { username, email, password } = req.body;
+  const validation = validateRegistration(req.body);
+  if (validation.error) return res.status(400).send({ message: validation.error });
 
-  authService.register({ username, email, password }, (err) => {
+  authService.register(validation.value, (err) => {
     if (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(409).send({ message: 'El correo ya está registrado.' });
+      }
       console.error('Error registering user:', err);
       res.status(500).send({ message: 'Error registering user' });
       return;
@@ -27,9 +32,13 @@ function getLogin(req, res) {
 }
 
 function login(req, res) {
-  const { email, password } = req.body;
+  const { email, password } = req.body || {};
+  if (typeof email !== 'string' || typeof password !== 'string' ||
+      email.length > 254 || password.length > 1024) {
+    return res.status(400).send({ message: 'Datos de acceso inválidos.' });
+  }
 
-  authService.login(email, password, (err, result) => {
+  authService.login(email.trim().toLowerCase(), password, (err, result) => {
     if (err) {
       console.error('Error logging in:', err);
       res.status(500).send({ message: 'Error logging in' });

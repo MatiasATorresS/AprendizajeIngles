@@ -1,4 +1,5 @@
 const OpenAI = require('openai');
+const { randomUUID } = require('node:crypto');
 const env = require('../config/env');
 const { validSelection, parseExercises } = require('../services/exercise-generation.service');
 
@@ -29,7 +30,7 @@ async function chat(req, res) {
       }
     }
     if (!questions) return res.status(502).json({ message: 'La IA devolvió ejercicios inválidos' });
-    req.session.pendingExercise = { subject, difficulty, questions };
+    req.session.pendingExercise = { id: randomUUID(), subject, difficulty, questions };
     req.session.save((error) => {
       if (error) return res.status(500).json({ message: 'No se pudo guardar el ejercicio' });
       res.json({ exercises: questions.map(({ question, alternatives }) => ({ question, alternatives })) });

@@ -1,7 +1,8 @@
 const exerciseRepository = require('../repositories/exercise.repository');
 
-function save({ userId, subject, difficulty, questions, userAnswers, results, newScore }, callback) {
+function save({ attemptId, userId, subject, difficulty, questions, userAnswers, results, newScore }, callback) {
   exerciseRepository.create(
+    attemptId,
     userId,
     subject,
     difficulty,
