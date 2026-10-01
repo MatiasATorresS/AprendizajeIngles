@@ -4,6 +4,10 @@ const corsOrigin = process.env.CORS_ORIGINS
   ? process.env.CORS_ORIGINS.split(',')
   : undefined;
 
+if (process.env.NODE_ENV === 'production' && !process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET es obligatorio en producción');
+}
+
 module.exports = {
   port: process.env.PORT || 3031,
   db: {
@@ -24,11 +28,11 @@ module.exports = {
     key: 'userId',
     secret: process.env.SESSION_SECRET || 'userSecret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     },
   },
   ai: {

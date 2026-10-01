@@ -1,5 +1,9 @@
 const authService = require('../services/auth.service');
 
+function publicUser(user) {
+  return { id: user.id, username: user.username, email: user.email, role: user.role };
+}
+
 function register(req, res) {
   const { username, email, password } = req.body;
 
@@ -16,7 +20,7 @@ function register(req, res) {
 
 function getLogin(req, res) {
   if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
+    res.send({ loggedIn: true, user: req.session.user.map(publicUser) });
   } else {
     res.send({ loggedIn: false });
   }
@@ -44,10 +48,12 @@ function login(req, res) {
       return;
     }
 
-    req.session.user = result.user;
-    console.log(req.session.user);
+    req.session.regenerate((sessionError) => {
+      if (sessionError) return res.status(500).send({ message: 'Error logging in' });
+      req.session.user = result.user.map(publicUser);
+      res.status(200).send(req.session.user);
+    });
     console.log('User logged in successfully');
-    res.status(200).send(result.user);
   });
 }
 

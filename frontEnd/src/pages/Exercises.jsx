@@ -24,28 +24,6 @@ const DIFFICULTIES = [
   { value: 'hard', label: 'Difícil' },
 ];
 
-const buildPrompt = (subject, difficulty) => `Create a valid JSON format object containing an Array, for a web, called exercises that contains 8 well-formulated exercises or conceptual questions based on the topic of ${subject} for students who are studying English in the first year of secondary education in Chile with a difficulty level ${difficulty}. If the difficulty is easy, the questions should be simpler to understand and also have some help on it. If the difficulty is difficult, the questions should be longer/more complex/challenging for the user. With 4 different alternatives, where 3 of 4 alternatives are incorrect, that is, they are not related to the topic and 1 of them is the correct answer, it is important that the alternatives always be of ${difficulty} difficulty. Questions must be in the question field. Alternatives must be in the alternatives field where 3 are incorrect and 1 is correct. The correct answer always must be 1 of the 4 alternatives presented in the alternatives field, written in words, is specified with the "correctAnswer" field in each question. The difficulty must go in the difficulty field like this: {difficulty: '${difficulty}'}.
-      Here you have the JSON format of the exercises:
-      {
-    "exercises": [
-        {
-            "question": "",
-            "alternatives": [
-                "",
-                "",
-                "",
-                ""
-            ],
-            "correctAnswer": "",
-            "difficulty": ""
-        },
-    ]
-}      
-      `;
-
-const scoreFor = (difficulty) =>
-  difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3;
-
 const Exercises = () => {
   const [subject, setSubject] = useState('');
   const [difficulty, setDifficulty] = useState('');
@@ -74,7 +52,8 @@ const Exercises = () => {
 
     try {
       const response = await api.post('/chat', {
-        prompt: buildPrompt(subject, difficulty),
+        subject,
+        difficulty,
       });
 
       let data = response.data;
@@ -121,32 +100,16 @@ const Exercises = () => {
   );
 
   const handleCheckAnswers = useCallback(async () => {
-    let newScore = 0;
-    const computedResults = questions.map((question, index) => {
-      const userAnswer = userAnswers[index];
-      const correctAnswer = question.correctAnswer;
-      const isCorrect = userAnswer === correctAnswer;
-      newScore += isCorrect ? scoreFor(question.difficulty) : 0;
-      return { question: question.question, userAnswer, correctAnswer, isCorrect };
-    });
-    setScore(newScore);
-    setResults(computedResults);
-
     try {
-      await api.post('/guardar-resultados', {
-        subject,
-        difficulty,
-        questions,
-        userAnswers,
-        results: computedResults,
-        newScore,
-      });
+      const response = await api.post('/guardar-resultados', { userAnswers });
+      setScore(response.data.score);
+      setResults(response.data.results);
+      setResultsShown(true);
     } catch (err) {
       console.error(err);
+      setError('No se pudieron guardar o calificar las respuestas. Inténtalo de nuevo.');
     }
-
-    setResultsShown(true);
-  }, [questions, userAnswers, subject, difficulty]);
+  }, [userAnswers]);
 
   const restart = () => {
     window.location.reload();

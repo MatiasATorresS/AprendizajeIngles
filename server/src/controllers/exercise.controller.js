@@ -1,9 +1,17 @@
 const exerciseService = require('../services/exercise.service');
+const { gradeExercise } = require('../services/grading.service');
 
 function saveResults(req, res) {
   const userId = req.session.user[0].id;
-  const { subject, difficulty, questions, userAnswers, results, newScore } = req.body;
-  console.log('User ID:', userId);
+  const { userAnswers } = req.body || {};
+  const pending = req.session.pendingExercise;
+  if (!pending) return res.status(409).json({ message: 'Genera un ejercicio antes de responder' });
+  const grade = gradeExercise(pending, userAnswers);
+  if (!grade) {
+    return res.status(400).json({ message: 'Respuestas inválidas o incompletas' });
+  }
+  const { subject, difficulty, questions } = pending;
+  const { results, score: newScore } = grade;
 
   exerciseService.save(
     { userId, subject, difficulty, questions, userAnswers, results, newScore },
@@ -13,8 +21,11 @@ function saveResults(req, res) {
         res.status(500).send({ message: 'Error al guardar los resultados' });
         return;
       }
-      console.log('Resultados guardados exitosamente');
-      res.status(200).send({ message: 'Resultados guardados exitosamente' });
+      delete req.session.pendingExercise;
+      req.session.save((sessionError) => {
+        if (sessionError) return res.status(500).send({ message: 'Error al cerrar el ejercicio' });
+        res.status(200).send({ message: 'Resultados guardados exitosamente', results, score: newScore });
+      });
     }
   );
 }

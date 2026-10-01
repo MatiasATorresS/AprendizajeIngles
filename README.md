@@ -90,6 +90,12 @@ El proyecto está configurado para desplegarse fácilmente en:
 | `DB_PORT` | Puerto (ej. 3306 o 4000 para TiDB) |
 | `OPENROUTER_API_KEY` | Tu API Key de OpenRouter |
 | `VITE_API_URL` | URL del Backend (en el Frontend) |
+| `SESSION_SECRET` | Secreto aleatorio obligatorio en producción |
+| `CORS_ORIGINS` | Orígenes autorizados, separados por comas |
+
+## Evaluación de la tesis
+
+El [protocolo de evaluación](docs/protocolo-evaluacion.md) define una propuesta de piloto, indicadores y límites de interpretación. Las preguntas generadas por IA necesitan revisión pedagógica antes de emplearse como instrumento de medición. El almacén de sesiones en memoria debe sustituirse por uno persistente y compartido para despliegues con múltiples instancias o reinicios frecuentes.
 
 ---
 Desarrollado por [MatiasATorresS](https://github.com/MatiasATorresS)

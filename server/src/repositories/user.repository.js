@@ -13,7 +13,7 @@ function create(username, email, passwordHash, callback) {
 }
 
 function findAll(callback) {
-  db.query('SELECT * FROM login', callback);
+  db.query('SELECT id, username, email, role FROM login', callback);
 }
 
 module.exports = { findByEmail, create, findAll };
