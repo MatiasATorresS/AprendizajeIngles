@@ -20,7 +20,7 @@ async function chat(req, res) {
     for (let attempt = 0; attempt < 2; attempt += 1) {
       const response = await openai.chat.completions.create({
         model: 'openai/gpt-3.5-turbo',
-        messages: [{ role: 'user', content: `Create exactly 8 different multiple-choice English exercises for first-year secondary students in Chile. Topic: ${subject}. Difficulty: ${difficulty}. Return only a JSON object with an "exercises" array. Each item must have a question, four distinct nonempty alternatives, and a correctAnswer equal to exactly one alternative. Vary the question wording and keep every alternative plausible. No markdown.` }],
+        messages: [{ role: 'user', content: `Create exactly 8 different multiple-choice English exercises for first-year secondary students in Chile. Topic: ${subject}. Difficulty: ${difficulty}. Return only a JSON object with an "exercises" array. Each item must have a question, four distinct nonempty alternatives, a correctAnswer equal to exactly one alternative, and one category chosen from: verb_form, negation, question, participle, time_expression, other. Choose the category that best describes the grammatical skill tested. Vary the wording and keep every alternative plausible. No markdown.` }],
       });
       try {
         questions = parseExercises(response.choices[0]?.message?.content);

@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import ContentNavbar from '../components/ContentNavbar';
 import ExerciseResults from '../components/ExerciseResults';
+import ProgressOverview from '../components/ProgressOverview';
+import { parseExerciseResults } from '../utils/progress';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Statistics.module.css';
 
@@ -150,14 +152,12 @@ export default function Statistics() {
               <p>Este usuario no ha realizado ejercicios aún.</p>
             </div>
           ) : (
-            <Accordion>
+            <>
+              <ProgressOverview exercises={userExercises} />
+              <h2 className="h4">Detalle de ejercicios</h2>
+              <Accordion>
               {userExercises.map((exercise, index) => {
-                let parsedResults = [];
-                try {
-                  parsedResults = JSON.parse(exercise.results);
-                } catch (err) {
-                  console.error('Error al parsear resultados', err);
-                }
+                const parsedResults = parseExerciseResults(exercise.results);
 
                 return (
                   <Accordion.Item
@@ -181,7 +181,8 @@ export default function Statistics() {
                   </Accordion.Item>
                 );
               })}
-            </Accordion>
+              </Accordion>
+            </>
           )}
         </Modal.Body>
 

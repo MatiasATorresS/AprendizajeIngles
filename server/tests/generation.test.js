@@ -7,6 +7,7 @@ function response() {
     question: `Question ${index + 1}?`,
     alternatives: ['A', 'B', 'C', 'D'],
     correctAnswer: 'B',
+    category: 'verb_form',
   })) };
 }
 
@@ -40,5 +41,11 @@ test('rejects incomplete and mismatched AI output', () => {
   assert.throws(() => parseExercises(JSON.stringify(data)));
   data.exercises.push(response().exercises[7]);
   data.exercises[0].correctAnswer = 'Z';
+  assert.throws(() => parseExercises(JSON.stringify(data)));
+});
+
+test('rejects categories outside the controlled vocabulary', () => {
+  const data = response();
+  data.exercises[0].category = 'anything';
   assert.throws(() => parseExercises(JSON.stringify(data)));
 });

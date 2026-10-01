@@ -1,0 +1,16 @@
+.overview { margin: 1.5rem 0 2rem; }
+.overview h2 { color: #1f4d44; font-size: 1.5rem; margin-bottom: .4rem; }
+.intro { color: #4a4f46; margin-bottom: 1rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 1rem; }
+.card { background: #fff; border: 1px solid #dce8e2; border-radius: 14px; padding: 1.2rem; box-shadow: 0 4px 18px rgba(20, 58, 51, .07); }
+.card h3 { color: #143a33; font-size: 1.15rem; margin-bottom: .35rem; }
+.card h4 { color: #1f4d44; font-size: .95rem; margin: 1.15rem 0 .5rem; }
+.metric { color: #4a4f46; margin-bottom: .65rem; }
+.track, .attemptTrack { display: block; height: 8px; background: #e6efe9; border-radius: 999px; overflow: hidden; }
+.track > span, .attemptTrack > span { display: block; height: 100%; background: #0e7490; border-radius: inherit; }
+.attempts, .errors { margin: 0; padding-left: 1.3rem; }
+.attempts li { display: grid; grid-template-columns: minmax(90px, 1fr) minmax(50px, 1fr) auto; align-items: center; gap: .65rem; margin: .35rem 0; font-size: .85rem; }
+.attempts strong { color: #143a33; }
+.errors li { margin: .25rem 0; font-size: .9rem; }
+.empty, .note { color: #6c7268; font-size: .85rem; }
+.note { margin-top: 1rem; max-width: 72ch; }

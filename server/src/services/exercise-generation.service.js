@@ -3,6 +3,9 @@ const SUBJECTS = new Set([
   'Past Simple Passive', 'Present Simple', 'Present Simple Passive',
 ]);
 const DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
+const CATEGORIES = new Set([
+  'verb_form', 'negation', 'question', 'participle', 'time_expression', 'other',
+]);
 
 function validSelection(subject, difficulty) {
   return SUBJECTS.has(subject) && DIFFICULTIES.has(difficulty);
@@ -19,7 +22,8 @@ function parseExercises(raw) {
   return data.exercises.map((item) => {
     if (!item || typeof item.question !== 'string' ||
         !Array.isArray(item.alternatives) || item.alternatives.length !== 4 ||
-        typeof item.correctAnswer !== 'string') {
+        typeof item.correctAnswer !== 'string' ||
+        typeof item.category !== 'string' || !CATEGORIES.has(item.category)) {
       throw new Error('Estructura de pregunta inválida');
     }
     const question = item.question.trim();
@@ -37,7 +41,7 @@ function parseExercises(raw) {
     const correctIndex = normalizedAnswers.indexOf(item.correctAnswer.trim().toLocaleLowerCase('en'));
     if (correctIndex < 0) throw new Error('Respuesta correcta ausente');
     seenQuestions.add(normalizedQuestion);
-    return { question, alternatives, correctAnswer: alternatives[correctIndex] };
+    return { question, alternatives, correctAnswer: alternatives[correctIndex], category: item.category };
   });
 }
 

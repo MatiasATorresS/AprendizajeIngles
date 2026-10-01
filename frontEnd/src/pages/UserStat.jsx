@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import ContentNavbar from '../components/ContentNavbar';
 import ExerciseResults from '../components/ExerciseResults';
+import ProgressOverview from '../components/ProgressOverview';
+import { parseExerciseResults } from '../utils/progress';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/UserStat.module.css';
 
@@ -54,14 +56,12 @@ export default function UserStat() {
               {userExercises.length === 0 ? (
                 <p className="text-muted">No tienes ejercicios guardados aún.</p>
               ) : (
-                <Accordion>
+                <>
+                  <ProgressOverview exercises={userExercises} />
+                  <h2 className="h4">Detalle de ejercicios</h2>
+                  <Accordion>
                   {userExercises.map((exercise, index) => {
-                    let parsedResults = [];
-                    try {
-                      parsedResults = JSON.parse(exercise.results);
-                    } catch (err) {
-                      console.error('Error al parsear resultados', err);
-                    }
+                    const parsedResults = parseExerciseResults(exercise.results);
 
                     return (
                       <Accordion.Item
@@ -84,7 +84,8 @@ export default function UserStat() {
                       </Accordion.Item>
                     );
                   })}
-                </Accordion>
+                  </Accordion>
+                </>
               )}
             </div>
           )}

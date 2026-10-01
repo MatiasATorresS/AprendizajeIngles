@@ -20,10 +20,11 @@ test('admin routes reject anonymous and regular users', () => {
 
 test('grade uses server answers and rejects incomplete or invalid submissions', () => {
   const pending = { difficulty: 'medium', questions: [
-    { question: 'Q1', alternatives: ['a', 'b', 'c', 'd'], correctAnswer: 'b' },
+    { question: 'Q1', alternatives: ['a', 'b', 'c', 'd'], correctAnswer: 'b', category: 'negation' },
     { question: 'Q2', alternatives: ['a', 'b', 'c', 'd'], correctAnswer: 'c' },
   ] };
   assert.equal(gradeExercise(pending, { 0: 'b', 1: 'a' }).score, 2);
+  assert.equal(gradeExercise(pending, { 0: 'b', 1: 'a' }).results[0].category, 'negation');
   assert.equal(gradeExercise(pending, { 0: 'b' }), null);
   assert.equal(gradeExercise(pending, { 0: 'b', 1: 'fake' }), null);
 });
