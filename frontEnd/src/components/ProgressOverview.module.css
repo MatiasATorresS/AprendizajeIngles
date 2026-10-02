@@ -14,3 +14,9 @@
 .errors li { margin: .25rem 0; font-size: .9rem; }
 .empty, .note { color: #6c7268; font-size: .85rem; }
 .note { margin-top: 1rem; max-width: 72ch; }
+.reviewLink {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #1f4d44;
+  font-weight: 700;
+}

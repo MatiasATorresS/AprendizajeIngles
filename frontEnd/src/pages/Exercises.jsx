@@ -1,13 +1,15 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import api from '../services/api';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ContentNavbar from '../components/ContentNavbar';
 import ExerciseResults from '../components/ExerciseResults';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Exercises.module.css';
+import { CATEGORY_LABELS } from '../utils/progress';
+import { clearDraft, readDraft, writeDraft } from '../utils/exerciseDraft';
 
 const SUBJECTS = [
   'Simple Past',
@@ -25,8 +27,15 @@ const DIFFICULTIES = [
 ];
 
 const Exercises = () => {
-  const [subject, setSubject] = useState('');
-  const [difficulty, setDifficulty] = useState('');
+  const location = useLocation();
+  const review = location.state?.review;
+  const [subject, setSubject] = useState(review?.subject || '');
+  const [difficulty, setDifficulty] = useState(review ? 'medium' : '');
+  const [focusCategory, setFocusCategory] = useState(review?.category || null);
+  const [draftId, setDraftId] = useState(null);
+  const [pendingLoading, setPendingLoading] = useState(true);
+  const [pendingCheckFailed, setPendingCheckFailed] = useState(false);
+  const [recovered, setRecovered] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +47,32 @@ const Exercises = () => {
   const [score, setScore] = useState(0);
 
   useDocumentMeta('Generador de Ejercicios · Aprendizaje de Inglés');
+
+  useEffect(() => {
+    let active = true;
+    api.get('/chat/pending').then(({ data }) => {
+      if (!active || !data.pending) return;
+      const pending = data.pending;
+      const answers = readDraft(sessionStorage, pending.id, pending.exercises);
+      setSubject(pending.subject);
+      setDifficulty(pending.difficulty);
+      setFocusCategory(null);
+      setDraftId(pending.id);
+      setRecovered(true);
+      setQuestions(pending.exercises);
+      setUserAnswers(answers);
+      setAllQuestionsAnswered(pending.exercises.every((_, index) => Boolean(answers[index])));
+      setQuestionsGenerated(true);
+    }).catch((err) => {
+      if (active) {
+        setPendingCheckFailed(true);
+        setError(err.response?.status === 401
+          ? 'Inicia sesión para continuar el ejercicio.'
+          : 'No se pudo comprobar si tenías un ejercicio pendiente. Recarga la página para intentarlo de nuevo.');
+      }
+    }).finally(() => { if (active) setPendingLoading(false); });
+    return () => { active = false; };
+  }, []);
 
   const canGenerate = subject && difficulty;
 
@@ -54,6 +89,7 @@ const Exercises = () => {
       const response = await api.post('/chat', {
         subject,
         difficulty,
+        ...(focusCategory ? { focusCategory } : {}),
       });
 
       let data = response.data;
@@ -70,6 +106,8 @@ const Exercises = () => {
       const generatedQuestions = data.exercises;
       if (Array.isArray(generatedQuestions) && generatedQuestions.length > 0) {
         setQuestions(generatedQuestions);
+        setDraftId(data.id);
+        setRecovered(false);
         setQuestionsGenerated(true);
       } else {
         setError(
@@ -86,19 +124,20 @@ const Exercises = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [canGenerate, subject, difficulty]);
+  }, [canGenerate, subject, difficulty, focusCategory]);
 
   const handleAnswerQuestion = useCallback(
     (index, answer) => {
       setUserAnswers((prev) => {
         const updated = { ...prev, [index]: answer };
+        writeDraft(sessionStorage, draftId, updated);
         const answered =
           questions.length > 0 && questions.every((_, i) => updated[i]);
         setAllQuestionsAnswered(answered);
         return updated;
       });
     },
-    [questions]
+    [questions, draftId]
   );
 
   const handleCheckAnswers = useCallback(async () => {
@@ -107,14 +146,24 @@ const Exercises = () => {
       setScore(response.data.score);
       setResults(response.data.results);
       setResultsShown(true);
+      clearDraft(sessionStorage, draftId);
+      setDraftId(null);
     } catch (err) {
       console.error(err);
       setError('No se pudieron guardar o calificar las respuestas. Inténtalo de nuevo.');
     }
-  }, [userAnswers]);
+  }, [userAnswers, draftId]);
 
   const restart = () => {
-    window.location.reload();
+    setQuestions([]);
+    setUserAnswers({});
+    setResults([]);
+    setResultsShown(false);
+    setQuestionsGenerated(false);
+    setAllQuestionsAnswered(false);
+    setScore(0);
+    setRecovered(false);
+    setError(null);
   };
 
   const questionGroups = useMemo(() => {
@@ -141,6 +190,12 @@ const Exercises = () => {
           <p className={styles.subtitle}>
             Selecciona una materia y nivel de dificultad para generar ejercicios personalizados.
           </p>
+          {focusCategory && CATEGORY_LABELS[focusCategory] && !questionsGenerated && (
+            <p className={styles.reviewNotice}>Repaso de {subject}: {CATEGORY_LABELS[focusCategory]}</p>
+          )}
+          {recovered && draftId && questionsGenerated && (
+            <p className={styles.reviewNotice}>Ejercicio pendiente recuperado. Tus respuestas se conservan en esta pestaña.</p>
+          )}
 
           <div className={styles.formCard}>
             <Form onSubmit={(e) => e.preventDefault()}>
@@ -180,7 +235,7 @@ const Exercises = () => {
                 variant="primary"
                 type="submit"
                 onClick={handleGenerateQuestions}
-                disabled={isLoading || questionsGenerated || !canGenerate}
+                disabled={pendingLoading || pendingCheckFailed || isLoading || questionsGenerated || !canGenerate}
                 className={styles.generateButton}>
                 {isLoading ? 'Generando...' : 'Generar Preguntas'}
               </Button>
@@ -235,7 +290,7 @@ const Exercises = () => {
 
           {resultsShown && (
             <div className={styles.resultsContainer}>
-              <ExerciseResults results={results} score={score} />
+              <ExerciseResults results={results} score={score} subject={subject} />
               <Button
                 variant="primary"
                 type="button"

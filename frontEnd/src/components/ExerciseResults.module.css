@@ -79,3 +79,11 @@
   text-align: center;
   padding: 18px 0;
 }
+.explanation {
+  line-height: 1.5;
+}
+
+.explanation a {
+  color: #1f4d44;
+  font-weight: 700;
+}

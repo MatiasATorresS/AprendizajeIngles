@@ -175,6 +175,7 @@ export default function Statistics() {
                       <ExerciseResults
                         results={parsedResults}
                         score={exercise.score}
+                        subject={exercise.subject}
                         emptyMessage="No hay detalles disponibles para este ejercicio."
                       />
                     </Accordion.Body>

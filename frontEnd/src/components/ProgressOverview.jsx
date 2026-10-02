@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { summarizeProgress } from '../utils/progress';
 import styles from './ProgressOverview.module.css';
 
@@ -9,7 +10,7 @@ function formatDate(value) {
     new Intl.DateTimeFormat('es-CL', { day: '2-digit', month: 'short', year: 'numeric' }).format(date);
 }
 
-export default function ProgressOverview({ exercises }) {
+export default function ProgressOverview({ exercises, allowReview = false }) {
   const progress = useMemo(() => summarizeProgress(exercises), [exercises]);
   if (!exercises.length) return null;
 
@@ -55,6 +56,12 @@ export default function ProgressOverview({ exercises }) {
                 ))}
               </ul>
             ) : <p className={styles.empty}>Aún no hay errores con categoría.</p>}
+            {allowReview && subject.commonErrors.length > 0 && (
+              <Link className={styles.reviewLink} to="/exercises"
+                state={{ review: { subject: subject.subject, category: subject.commonErrors[0].category } }}>
+                Repasar mis errores: {subject.commonErrors[0].label} →
+              </Link>
+            )}
           </article>
         ))}
       </div>

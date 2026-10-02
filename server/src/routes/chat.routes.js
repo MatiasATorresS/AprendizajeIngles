@@ -6,5 +6,6 @@ const { chatByUserHour, chatByUserDay } = require('../middleware/rate-limit.midd
 const router = express.Router();
 
 router.post('/chat', requireAuth, chatByUserHour, chatByUserDay, chatController.chat);
+router.get('/chat/pending', requireAuth, chatController.getPending);
 
 module.exports = router;

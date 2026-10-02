@@ -12,6 +12,7 @@ function gradeExercise(pending, userAnswers) {
     correctAnswer: question.correctAnswer,
     isCorrect: userAnswers[index] === question.correctAnswer,
     category: question.category || null,
+    explanation: question.explanation || null,
   }));
   return { results, score: results.filter((result) => result.isCorrect).length * points };
 }

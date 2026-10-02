@@ -8,6 +8,7 @@ function response() {
     alternatives: ['A', 'B', 'C', 'D'],
     correctAnswer: 'B',
     category: 'verb_form',
+    explanation: 'La forma verbal B corresponde al tiempo pedido.',
   })) };
 }
 
@@ -23,6 +24,7 @@ test('parses valid questions and normalizes the correct answer', () => {
   const questions = parseExercises(`\`\`\`json\n${JSON.stringify(data)}\n\`\`\``);
   assert.equal(questions.length, 8);
   assert.equal(questions[0].correctAnswer, 'B');
+  assert.match(questions[0].explanation, /forma verbal/);
 });
 
 test('rejects duplicate questions and alternatives', () => {
@@ -47,5 +49,13 @@ test('rejects incomplete and mismatched AI output', () => {
 test('rejects categories outside the controlled vocabulary', () => {
   const data = response();
   data.exercises[0].category = 'anything';
+  assert.throws(() => parseExercises(JSON.stringify(data)));
+});
+
+test('validates review focus and useful explanations', () => {
+  assert.equal(validSelection('Simple Past', 'medium', 'negation'), true);
+  assert.equal(validSelection('Simple Past', 'medium', 'unknown'), false);
+  const data = response();
+  data.exercises[0].explanation = ' ';
   assert.throws(() => parseExercises(JSON.stringify(data)));
 });

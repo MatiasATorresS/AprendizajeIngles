@@ -57,7 +57,7 @@ export default function UserStat() {
                 <p className="text-muted">No tienes ejercicios guardados aún.</p>
               ) : (
                 <>
-                  <ProgressOverview exercises={userExercises} />
+                  <ProgressOverview exercises={userExercises} allowReview />
                   <h2 className="h4">Detalle de ejercicios</h2>
                   <Accordion>
                   {userExercises.map((exercise, index) => {
@@ -78,6 +78,7 @@ export default function UserStat() {
                           <ExerciseResults
                             results={parsedResults}
                             score={exercise.score}
+                            subject={exercise.subject}
                             emptyMessage="No hay detalles disponibles para este ejercicio."
                           />
                         </Accordion.Body>

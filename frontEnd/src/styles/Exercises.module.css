@@ -232,3 +232,9 @@ body {
   color: #1f4d44;
   margin: 24px 0 20px;
 }
+.reviewNotice {
+  padding: .8rem 1rem;
+  border-radius: 10px;
+  background: #e6efe9;
+  color: #143a33;
+}

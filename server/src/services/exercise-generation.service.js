@@ -7,8 +7,9 @@ const CATEGORIES = new Set([
   'verb_form', 'negation', 'question', 'participle', 'time_expression', 'other',
 ]);
 
-function validSelection(subject, difficulty) {
-  return SUBJECTS.has(subject) && DIFFICULTIES.has(difficulty);
+function validSelection(subject, difficulty, focusCategory) {
+  return SUBJECTS.has(subject) && DIFFICULTIES.has(difficulty) &&
+    (focusCategory === undefined || CATEGORIES.has(focusCategory));
 }
 
 function parseExercises(raw) {
@@ -23,17 +24,20 @@ function parseExercises(raw) {
     if (!item || typeof item.question !== 'string' ||
         !Array.isArray(item.alternatives) || item.alternatives.length !== 4 ||
         typeof item.correctAnswer !== 'string' ||
-        typeof item.category !== 'string' || !CATEGORIES.has(item.category)) {
+        typeof item.category !== 'string' || !CATEGORIES.has(item.category) ||
+        typeof item.explanation !== 'string') {
       throw new Error('Estructura de pregunta inválida');
     }
     const question = item.question.trim();
+    const explanation = item.explanation.trim();
     const alternatives = item.alternatives.map((value) => {
       if (typeof value !== 'string') throw new Error('Alternativa inválida');
       return value.trim();
     });
     const normalizedAnswers = alternatives.map((value) => value.toLocaleLowerCase('en'));
     const normalizedQuestion = question.toLocaleLowerCase('en');
-    if (!question || question.length > 500 || seenQuestions.has(normalizedQuestion) ||
+    if (!question || question.length > 500 || !explanation || explanation.length > 400 ||
+        seenQuestions.has(normalizedQuestion) ||
         alternatives.some((value) => !value || value.length > 250) ||
         new Set(normalizedAnswers).size !== 4) {
       throw new Error('Pregunta repetida o alternativa ambigua');
@@ -41,7 +45,8 @@ function parseExercises(raw) {
     const correctIndex = normalizedAnswers.indexOf(item.correctAnswer.trim().toLocaleLowerCase('en'));
     if (correctIndex < 0) throw new Error('Respuesta correcta ausente');
     seenQuestions.add(normalizedQuestion);
-    return { question, alternatives, correctAnswer: alternatives[correctIndex], category: item.category };
+    return { question, alternatives, correctAnswer: alternatives[correctIndex],
+      category: item.category, explanation };
   });
 }
 
