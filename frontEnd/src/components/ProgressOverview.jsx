@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { summarizeProgress } from '../utils/progress';
+import { recommendedReview, summarizeProgress } from '../utils/progress';
 import styles from './ProgressOverview.module.css';
 
 function formatDate(value) {
@@ -12,11 +12,27 @@ function formatDate(value) {
 
 export default function ProgressOverview({ exercises, allowReview = false }) {
   const progress = useMemo(() => summarizeProgress(exercises), [exercises]);
+  const recommendation = allowReview ? recommendedReview(progress) : null;
   if (!exercises.length) return null;
 
   return (
     <section className={styles.overview} aria-labelledby="progress-heading">
       <h2 id="progress-heading">Progreso de práctica</h2>
+      {allowReview && recommendation && (
+        <div className={styles.nextStep}>
+          <div>
+            <p className={styles.eyebrow}>TU PRÓXIMO PASO</p>
+            <h3>{recommendation.category ? 'Repasa' : 'Practica'} {recommendation.subject}</h3>
+            <p>{recommendation.category
+              ? `La dificultad que más se repite es ${recommendation.categoryLabel.toLowerCase()} (${recommendation.errorCount} errores).`
+              : 'Haz otro ejercicio para seguir consolidando este contenido.'}</p>
+          </div>
+          <Link className={styles.nextStepButton} to="/exercises"
+            state={{ review: { subject: recommendation.subject, category: recommendation.category } }}>
+            {recommendation.category ? 'Repasar mis errores' : 'Practicar este tema'} →
+          </Link>
+        </div>
+      )}
       <p className={styles.intro}>
         {progress.exercises} ejercicios · {progress.correct} de {progress.answers} respuestas correctas
         {progress.percent !== null ? ` · ${progress.percent}% de aciertos` : ''}
@@ -56,12 +72,6 @@ export default function ProgressOverview({ exercises, allowReview = false }) {
                 ))}
               </ul>
             ) : <p className={styles.empty}>Aún no hay errores con categoría.</p>}
-            {allowReview && subject.commonErrors.length > 0 && (
-              <Link className={styles.reviewLink} to="/exercises"
-                state={{ review: { subject: subject.subject, category: subject.commonErrors[0].category } }}>
-                Repasar mis errores: {subject.commonErrors[0].label} →
-              </Link>
-            )}
           </article>
         ))}
       </div>

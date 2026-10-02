@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseExerciseResults, summarizeProgress } from '../src/utils/progress.js';
+import { parseExerciseResults, summarizeProgress, recommendedReview } from '../src/utils/progress.js';
 
 test('parses historic results and tolerates malformed records', () => {
   assert.equal(parseExerciseResults('[{"isCorrect":true}]').length, 1);
@@ -30,4 +30,24 @@ test('legacy attempts count without inventing an error category', () => {
   const progress = summarizeProgress([{ id: 1, subject: 'Simple Past', results: '[{"isCorrect":false}]' }]);
   assert.equal(progress.subjects[0].percent, 0);
   assert.deepEqual(progress.subjects[0].commonErrors, []);
+});
+
+test('recommends the most frequent categorized error across subjects', () => {
+  const progress = summarizeProgress([
+    { subject: 'Simple Past', results: [{ isCorrect: false, category: 'question' }] },
+    { subject: 'Present Perfect', results: [
+      { isCorrect: false, category: 'participle' },
+      { isCorrect: false, category: 'participle' },
+    ] },
+  ]);
+  assert.deepEqual(recommendedReview(progress), {
+    subject: 'Present Perfect', category: 'participle', categoryLabel: 'Participio',
+    errorCount: 2, percent: 0,
+  });
+  assert.equal(recommendedReview(summarizeProgress([])), null);
+  assert.deepEqual(recommendedReview(summarizeProgress([
+    { subject: 'Simple Past', results: [{ isCorrect: true }] },
+  ])), {
+    subject: 'Simple Past', category: null, categoryLabel: null, errorCount: 0, percent: 100,
+  });
 });

@@ -12,7 +12,6 @@ const CARDS = [
     title: 'Ver Materiales',
     text: 'Explora nuestra colección de materiales de aprendizaje de inglés para estudiar.',
     buttonLabel: 'Ir a Materiales',
-    variant: 'primary',
     tone: 'materials',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -25,7 +24,6 @@ const CARDS = [
     title: 'Hacer Ejercicios',
     text: 'Practica tus habilidades respondiendo a nuestros ejercicios interactivos de inglés.',
     buttonLabel: 'Ir a Ejercicios',
-    variant: 'success',
     tone: 'exercises',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -38,7 +36,6 @@ const CARDS = [
     title: 'Tus Estadísticas',
     text: 'Consulta tus resultados y mira cómo ha sido tu progreso en tu aprendizaje.',
     buttonLabel: 'Ver Estadísticas',
-    variant: 'info',
     tone: 'stats',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
@@ -64,7 +61,8 @@ export default function User({ username }) {
   return (
     <div className={styles.userContainer}>
       <ContentNavbar
-        brand="Centro de Aprendizaje de Inglés"
+        brand="Aprende Inglés"
+        studentNav
         right={
           <>
             <span className={styles.welcomeText}>¡Bienvenido, {username}!</span>
@@ -99,7 +97,7 @@ export default function User({ username }) {
                 <h3 className={styles.cardTitle}>{card.title}</h3>
                 <p className={styles.cardText}>{card.text}</p>
                 <Link to={card.to} className={styles.link}>
-                  <Button variant={card.variant} className={styles.cardButton}>
+                  <Button variant="primary" className={styles.cardButton}>
                     {card.buttonLabel}
                   </Button>
                 </Link>

@@ -5,6 +5,7 @@ import { Container, ListGroup } from 'react-bootstrap';
 import ContentNavbar from '../components/ContentNavbar';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from '../styles/Materials.module.css';
+import { materialDescription, unitDescription } from '../utils/materialDescriptions';
 
 export default function Materials() {
   const [data, setData] = useState([]);
@@ -50,8 +51,8 @@ export default function Materials() {
   return (
     <div className={styles.userContainer}>
       <ContentNavbar
-        brand="Materiales de Aprendizaje de Inglés"
-        right={<Link to="/main">Inicio</Link>}
+        brand="Aprende Inglés"
+        studentNav
       />
       <main id="main">
         <Container className={styles.container}>
@@ -78,7 +79,7 @@ export default function Materials() {
                     </div>
                     <h2 className={styles.unitTitle}>{item.unidad.nombre}</h2>
                   </div>
-                  <p className={styles.unitDesc}>{item.unidad.descripcion}</p>
+                  <p className={styles.unitDesc}>{unitDescription(item.unidad)}</p>
 
                   <p className={styles.materiasLabel}>Contenidos</p>
                   <ListGroup variant="flush">
@@ -86,7 +87,7 @@ export default function Materials() {
                       <ListGroup.Item key={materia.id} className={styles.listItem}>
                         <div className={styles.materiaInfo}>
                           <p className={styles.materiaName}>{materia.nombre}</p>
-                          <p className={styles.materiaDesc}>{materia.descripcion}</p>
+                          <p className={styles.materiaDesc}>{materialDescription(materia)}</p>
                         </div>
                         <Link to={`/materials/${materia.id}`} className={styles.detailsButton}>
                           Ver detalles →

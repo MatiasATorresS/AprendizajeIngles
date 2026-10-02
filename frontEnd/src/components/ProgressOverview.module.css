@@ -14,9 +14,33 @@
 .errors li { margin: .25rem 0; font-size: .9rem; }
 .empty, .note { color: #6c7268; font-size: .85rem; }
 .note { margin-top: 1rem; max-width: 72ch; }
-.reviewLink {
-  display: inline-block;
-  margin-top: 1rem;
-  color: #1f4d44;
+.nextStep {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  margin: 1.25rem 0 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-pine-soft);
+  border: 1px solid #bdd6c8;
+}
+
+.nextStep h3 { margin: .1rem 0 .35rem; color: var(--color-pine-dark); }
+.nextStep p { margin: 0; }
+.eyebrow { color: var(--color-pine) !important; font-size: .75rem; font-weight: 800; letter-spacing: .09em; }
+.nextStepButton {
+  flex-shrink: 0;
+  padding: .7rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-pine);
+  color: #fff;
   font-weight: 700;
+  text-decoration: none;
+}
+.nextStepButton:hover, .nextStepButton:focus-visible { background: var(--color-pine-dark); color: #fff; }
+
+@media (max-width: 640px) {
+  .nextStep { align-items: stretch; flex-direction: column; }
+  .nextStepButton { text-align: center; }
 }

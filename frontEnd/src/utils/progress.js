@@ -73,3 +73,23 @@ export function summarizeProgress(exercises) {
     })).sort((a, b) => a.subject.localeCompare(b.subject, 'es')),
   };
 }
+
+export function recommendedReview(progress) {
+  const candidates = progress.subjects.flatMap((subject) =>
+    subject.commonErrors.map((error) => ({
+      subject: subject.subject,
+      category: error.category,
+      categoryLabel: error.label,
+      errorCount: error.count,
+      percent: subject.percent ?? 100,
+    })));
+  candidates.sort((a, b) => b.errorCount - a.errorCount || a.percent - b.percent ||
+    a.subject.localeCompare(b.subject, 'es'));
+  if (candidates.length) return candidates[0];
+  const subject = [...progress.subjects].sort((a, b) =>
+    (a.percent ?? 100) - (b.percent ?? 100) || a.subject.localeCompare(b.subject, 'es'))[0];
+  return subject ? {
+    subject: subject.subject, category: null, categoryLabel: null,
+    errorCount: 0, percent: subject.percent,
+  } : null;
+}

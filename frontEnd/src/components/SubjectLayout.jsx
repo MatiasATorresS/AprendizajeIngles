@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import ContentNavbar from './ContentNavbar';
 import useDocumentMeta from '../hooks/useDocumentMeta';
 import styles from './SubjectLayout.module.css';
@@ -12,13 +11,8 @@ export default function SubjectLayout({ tag, title, intro, children }) {
   return (
     <>
       <ContentNavbar
-        brand="English Learning Hub"
-        right={
-          <>
-            <Link to="/main">Inicio</Link>
-            <Link to="/materials">Materiales</Link>
-          </>
-        }
+        brand="Aprende Inglés"
+        studentNav
       />
       <main id="main">
         <div className={styles.pageWrapper}>

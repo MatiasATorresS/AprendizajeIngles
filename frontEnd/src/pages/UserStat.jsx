@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Container, Accordion, Badge } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import api from '../services/api';
 import ContentNavbar from '../components/ContentNavbar';
 import ExerciseResults from '../components/ExerciseResults';
@@ -40,8 +39,8 @@ export default function UserStat() {
   return (
     <div className={styles.userStatContainer}>
       <ContentNavbar
-        brand="Materiales de Aprendizaje de Inglés"
-        right={<Link to="/main">Inicio</Link>}
+        brand="Aprende Inglés"
+        studentNav
       />
 
       <main id="main">

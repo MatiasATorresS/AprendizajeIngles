@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import api from '../services/api';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ContentNavbar from '../components/ContentNavbar';
 import ExerciseResults from '../components/ExerciseResults';
 import useDocumentMeta from '../hooks/useDocumentMeta';
@@ -180,8 +180,8 @@ const Exercises = () => {
   return (
     <div>
       <ContentNavbar
-        brand="Ejercicios de Aprendizaje de Inglés"
-        right={<Link to="/main">Inicio</Link>}
+        brand="Aprende Inglés"
+        studentNav
       />
 
       <main id="main">
@@ -292,7 +292,7 @@ const Exercises = () => {
             <div className={styles.resultsContainer}>
               <ExerciseResults results={results} score={score} subject={subject} />
               <Button
-                variant="primary"
+                variant="outline-primary"
                 type="button"
                 onClick={restart}
                 className={styles.restartButton}>

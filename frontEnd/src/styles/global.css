@@ -125,6 +125,32 @@ p {
   transform: scale(0.98);
 }
 
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-pine);
+  --bs-btn-border-color: var(--color-pine);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--color-pine-dark);
+  --bs-btn-hover-border-color: var(--color-pine-dark);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--color-pine-dark);
+  --bs-btn-active-border-color: var(--color-pine-dark);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--color-pine);
+  --bs-btn-disabled-border-color: var(--color-pine);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--color-pine);
+  --bs-btn-border-color: var(--color-pine);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--color-pine);
+  --bs-btn-hover-border-color: var(--color-pine);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--color-pine-dark);
+  --bs-btn-active-border-color: var(--color-pine-dark);
+}
+
 .navbar-toggler:focus {
   box-shadow: var(--focus-ring);
 }
