@@ -61,7 +61,7 @@ body {
 
 .subtitle {
   font-size: 1.05rem;
-  color: #6c7268;
+  color: var(--color-muted);
   margin-bottom: 36px;
 }
 

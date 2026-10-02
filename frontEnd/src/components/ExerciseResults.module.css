@@ -25,7 +25,7 @@
 }
 
 .questionNumber {
-  color: var(--color-vermillion);
+  color: var(--color-vermillion-dark);
   font-weight: 800;
   margin-right: 4px;
 }

@@ -58,7 +58,7 @@ body {
 
 .pageSubtitle {
   font-size: 1.1rem;
-  color: #6c7268;
+  color: var(--color-muted);
   margin-bottom: 40px;
 }
 
@@ -107,7 +107,7 @@ body {
 
 .unitDesc {
   font-size: 14px;
-  color: #6c7268;
+  color: var(--color-muted);
   padding: 0 28px 20px;
   margin: 0;
   line-height: 1.5;
@@ -154,7 +154,7 @@ body {
 
 .materiaDesc {
   font-size: 13px;
-  color: #6c7268;
+  color: var(--color-muted);
   margin: 0;
 }
 

@@ -66,15 +66,15 @@
 
 .log-account-button {
   background-color: transparent;
-  color: var(--color-vermillion-dark);
-  border: 2px solid var(--color-vermillion);
+  color: var(--color-pine);
+  border: 2px solid var(--color-pine);
   font-weight: 700;
   border-radius: var(--radius-sm);
   padding: 10px 16px;
 }
 
 .log-account-button:hover {
-  background-color: var(--color-vermillion);
+  background-color: var(--color-pine);
   color: #fff;
 }
 

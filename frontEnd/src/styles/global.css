@@ -40,13 +40,13 @@ h5 {
 }
 
 a {
-  color: var(--color-vermillion-dark);
+  color: var(--color-pine);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--color-vermillion);
+  color: var(--color-pine-dark);
 }
 
 p {

@@ -81,7 +81,7 @@
 
 .welcomeSubtitle {
   font-size: 1.05rem;
-  color: #6c7268;
+  color: var(--color-muted);
   margin-bottom: 48px;
 }
 
@@ -150,7 +150,7 @@
 }
 
 .cardDescription {
-  color: #6c7268;
+  color: var(--color-muted);
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 22px;
@@ -177,9 +177,9 @@
 }
 
 .cardLinkStats {
-  background-color: #0e7490;
+  background-color: var(--color-pine);
 }
 
 .cardLinkStats:hover {
-  background-color: #0b5569;
+  background-color: var(--color-pine-dark);
 }

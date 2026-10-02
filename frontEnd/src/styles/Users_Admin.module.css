@@ -55,7 +55,7 @@
 
 .pageSubtitle {
   font-size: 1.05rem;
-  color: #6c7268;
+  color: var(--color-muted);
   margin-bottom: 32px;
 }
 
@@ -84,7 +84,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: #6c7268;
+  color: var(--color-muted);
   border: none !important;
   padding: 16px 20px;
   border-bottom: 2px solid #e4ded0 !important;
@@ -173,7 +173,7 @@
 
 /* ─── Email ─── */
 .emailText {
-  color: #6c7268;
+  color: var(--color-muted);
   font-size: 13px;
 }
 
@@ -181,5 +181,5 @@
 .emptyState {
   text-align: center;
   padding: 40px 20px;
-  color: #6c7268;
+  color: var(--color-muted);
 }

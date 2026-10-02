@@ -106,7 +106,7 @@ export default function Statistics() {
                       </td>
                       <td>
                         <Button
-                          variant="info"
+                          variant="primary"
                           type="button"
                           className={styles.statsButton}
                           onClick={() => handleViewStatistics(user)}>

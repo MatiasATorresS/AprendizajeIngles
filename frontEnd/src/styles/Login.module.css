@@ -79,15 +79,15 @@
 
 .secondaryButton {
   background: transparent;
-  color: var(--color-vermillion-dark);
-  border: 2px solid var(--color-vermillion);
+  color: var(--color-pine);
+  border: 2px solid var(--color-pine);
   font-weight: 700;
   border-radius: var(--radius-sm);
   padding: 10px 16px;
 }
 
 .secondaryButton:hover {
-  background: var(--color-vermillion);
+  background: var(--color-pine);
   color: #fff;
 }
 
